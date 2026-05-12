@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maslow Social – Wireframe & Sitemap</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f7f7f7;color:#111928;font-size:14px}
+.doc-header{background:linear-gradient(135deg,#47077b,#8a1fde);color:white;padding:48px 80px}
+.doc-header h1{font-size:40px;font-weight:800;margin-bottom:8px;letter-spacing:-1px}
+.doc-header p{font-size:16px;opacity:.8;max-width:600px;line-height:1.6}
+.badges{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:100px;padding:4px 14px;font-size:12px;font-weight:600}
+.section{padding:60px 80px}
+.section-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#5d0096;margin-bottom:12px}
+.section-title{font-size:28px;font-weight:800;color:#111928;letter-spacing:-.5px;margin-bottom:8px}
+.section-desc{color:#6b7280;font-size:15px;line-height:1.6;max-width:700px;margin-bottom:40px}
+hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
+
+/* ── SITEMAP ────────────────────────────────── */
+.sitemap{display:flex;flex-direction:column;gap:32px}
+.sitemap-row{display:flex;gap:16px;flex-wrap:wrap}
+.sitemap-section{flex:1;min-width:180px}
+.sitemap-section-header{background:#5d0096;color:white;border-radius:12px 12px 0 0;padding:10px 14px;font-weight:700;font-size:13px;display:flex;align-items:center;gap:8px}
+.sitemap-pages{background:white;border:1.5px solid #e5e7eb;border-top:none;border-radius:0 0 12px 12px;overflow:hidden}
+.sitemap-page{padding:9px 14px;border-bottom:1px solid #f3f4f6;font-size:13px;color:#374151;display:flex;align-items:center;gap:8px}
+.sitemap-page:last-child{border-bottom:none}
+.sitemap-page .dot{width:6px;height:6px;border-radius:50%;background:#d8b4fe;shrink:0;flex-shrink:0}
+.sitemap-page.key .dot{background:#5d0096}
+.sitemap-page.new{color:#5d0096;font-weight:600}
+.sitemap-page.new .dot{background:#5d0096}
+.tag{font-size:10px;font-weight:700;padding:2px 7px;border-radius:100px;margin-left:auto;white-space:nowrap}
+.tag.social{background:#ede9fe;color:#5d0096}
+.tag.new{background:#fef3c7;color:#b45309}
+.tag.core{background:#dcfce7;color:#166534}
+
+/* ── USER FLOWS ─────────────────────────────── */
+.flows{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.flow-card{background:white;border-radius:16px;padding:24px;border:1.5px solid #e5e7eb}
+.flow-title{font-weight:700;font-size:14px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.flow-emoji{font-size:20px}
+.flow-steps{display:flex;flex-direction:column;gap:0}
+.flow-step{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px dashed #f0f0f0;position:relative}
+.flow-step:last-child{border-bottom:none}
+.step-num{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#47077b,#8a1fde);color:white;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-text{flex:1}
+.step-name{font-weight:600;font-size:13px;color:#111928}
+.step-sub{font-size:12px;color:#6b7280;margin-top:2px}
+.step-branch{font-size:11px;color:#5d0096;font-weight:600;margin-top:3px}
+
+/* ── WIREFRAMES ─────────────────────────────── */
+.wireframes-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.wireframe-card{background:white;border-radius:20px;overflow:hidden;border:1.5px solid #e5e7eb}
+.wf-label{padding:14px 20px;background:#fafafa;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:between;gap:8px}
+.wf-label-text{font-weight:700;font-size:13px;color:#374151}
+.wf-label-sub{font-size:11px;color:#9ca3af;margin-left:auto}
+.wf-screen{padding:0;background:#f9fafb}
+
+/* shared wireframe primitives */
+.wf{display:flex;flex-direction:column;font-size:11px;color:#6b7280;line-height:1.4}
+.wf-nav{background:#fff;border-bottom:1px solid #e5e7eb;padding:8px 16px;display:flex;align-items:center;gap:8px}
+.wf-logo{background:#5d0096;color:white;font-weight:800;font-size:10px;padding:3px 8px;border-radius:6px}
+.wf-nav-links{display:flex;gap:12px;flex:1;justify-content:center}
+.wf-nav-link{font-size:10px;color:#6b7280;font-weight:500}
+.wf-nav-link.active{color:#5d0096;font-weight:700}
+.wf-nav-right{display:flex;align-items:center;gap:6px;margin-left:auto}
+.wf-avatar{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#47077b,#8a1fde);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:9px}
+.wf-notif{width:18px;height:18px;border-radius:50%;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:9px;position:relative}
+.wf-notif-dot{position:absolute;top:-2px;right:-2px;width:6px;height:6px;background:#ef4444;border-radius:50%}
+.wf-body{display:flex;gap:0;flex:1}
+.wf-sidebar{width:60px;background:#fff;border-right:1px solid #f0f0f0;padding:8px 4px;display:flex;flex-direction:column;gap:8px;align-items:center}
+.wf-sidebar-item{width:100%;padding:6px 4px;border-radius:8px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+.wf-sidebar-item.active{background:rgba(93,0,150,.08)}
+.wf-sidebar-icon{font-size:14px}
+.wf-sidebar-label{font-size:8px;color:#9ca3af;font-weight:500}
+.wf-sidebar-item.active .wf-sidebar-label{color:#5d0096}
+.wf-main{flex:1;padding:12px;display:flex;flex-direction:column;gap:10px;min-height:340px}
+.wf-right{width:90px;border-left:1px solid #f0f0f0;padding:10px 8px;display:flex;flex-direction:column;gap:8px}
+
+/* boxes */
+.wf-box{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px}
+.wf-box-gray{background:#f3f4f6;border-radius:8px;padding:8px 10px}
+.wf-box-purple{background:rgba(93,0,150,.08);border:1px dashed #d8b4fe;border-radius:8px;padding:8px 10px}
+.wf-box-gradient{background:linear-gradient(135deg,#47077b,#8a1fde);border-radius:10px;padding:10px 12px;color:white}
+.wf-title{font-weight:700;font-size:11px;color:#374151;margin-bottom:4px}
+.wf-sub{font-size:10px;color:#9ca3af}
+.wf-pill{display:inline-flex;background:#5d0096;color:white;border-radius:100px;padding:3px 10px;font-size:9px;font-weight:700}
+.wf-pill-outline{display:inline-flex;border:1.5px solid #5d0096;color:#5d0096;border-radius:100px;padding:3px 10px;font-size:9px;font-weight:700}
+.wf-pill-gray{display:inline-flex;background:#f3f4f6;color:#6b7280;border-radius:100px;padding:3px 10px;font-size:9px;font-weight:500}
+.wf-row{display:flex;gap:8px;align-items:center}
+.wf-col{display:flex;flex-direction:column;gap:6px}
+.wf-flex{display:flex;gap:8px}
+.wf-bar-bg{height:4px;background:#f0f0f0;border-radius:100px;flex:1}
+.wf-bar-fill{height:4px;background:#5d0096;border-radius:100px}
+.wf-circle{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#47077b,#8a1fde);color:white;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.wf-circle-sm{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#47077b,#8a1fde);color:white;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.wf-divider{border:none;border-top:1px solid #f0f0f0;margin:6px 0}
+.wf-feed-item{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.wf-activity-dot{width:8px;height:8px;border-radius:50%;background:#5d0096;flex-shrink:0;margin-top:3px}
+.wf-tag{background:rgba(93,0,150,.1);color:#5d0096;font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px}
+.wf-compare-col{flex:1;display:flex;flex-direction:column;gap:6px}
+.wf-compare-label{font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px}
+.wf-compare-row{display:flex;gap:6px;align-items:center}
+.wf-spider{width:70px;height:70px;background:rgba(93,0,150,.06);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px dashed #d8b4fe;font-size:8px;color:#5d0096;text-align:center}
+.wf-tabs{display:flex;gap:0;border-bottom:1px solid #e5e7eb;margin-bottom:10px}
+.wf-tab{padding:6px 12px;font-size:10px;font-weight:500;color:#9ca3af;border-bottom:2px solid transparent;cursor:pointer}
+.wf-tab.active{color:#5d0096;border-bottom-color:#5d0096;font-weight:700}
+.wf-notif-item{display:flex;gap:6px;padding:7px 0;border-bottom:1px solid #f3f4f6}
+.wf-notif-item:last-child{border:none}
+.wf-mention{color:#5d0096;font-weight:600}
+
+/* feature matrix */
+.matrix{display:grid;grid-template-columns:200px repeat(5,1fr);border:1.5px solid #e5e7eb;border-radius:16px;overflow:hidden}
+.matrix-head{background:#5d0096;color:white;padding:10px 14px;font-weight:700;font-size:12px}
+.matrix-head:first-child{background:#47077b}
+.matrix-row-label{background:#fafafa;padding:10px 14px;font-weight:600;font-size:12px;border-right:1px solid #e5e7eb;border-top:1px solid #e5e7eb}
+.matrix-cell{padding:10px 14px;text-align:center;border-top:1px solid #e5e7eb;font-size:16px}
+.matrix-cell:nth-child(even){background:#fafafa}
+
+/* data model */
+.models{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.model-card{background:white;border:1.5px solid #e5e7eb;border-radius:14px;overflow:hidden}
+.model-header{background:linear-gradient(135deg,#47077b,#8a1fde);color:white;padding:10px 14px;font-weight:700;font-size:13px}
+.model-field{padding:7px 14px;border-bottom:1px solid #f3f4f6;display:flex;gap:8px;align-items:center;font-size:12px}
+.model-field:last-child{border:none}
+.field-type{font-size:10px;color:#9ca3af;margin-left:auto;font-family:monospace}
+.field-key{font-size:9px;color:#5d0096;font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.6;margin-bottom:12px">Maslow · Product Design</div>
+  <h1>Social Platform Wireframe</h1>
+  <p>A personality-first social network where your results are your profile — see friends' types, take tests for each other, and compare across all assessment types.</p>
+  <div class="badges">
+    <span class="badge">Sitemap</span>
+    <span class="badge">User Flows</span>
+    <span class="badge">Key Screens</span>
+    <span class="badge">Feature Matrix</span>
+    <span class="badge">Data Model</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 1 – SITEMAP
+     ═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">01 — Information Architecture</div>
+  <div class="section-title">Full Sitemap</div>
+  <div class="section-desc">Every page in the platform, organized by section. Purple dots = new social pages not yet built. Green = core. Yellow = planned.</div>
+
+  <div class="sitemap">
+    <div class="sitemap-row">
+
+      <!-- Auth -->
+      <div class="sitemap-section" style="min-width:160px;max-width:200px">
+        <div class="sitemap-section-header" style="background:#374151">🔐 Auth & Onboarding</div>
+        <div class="sitemap-pages">
+          <div class="sitemap-page key"><div class="dot"></div>Landing / Marketing<span class="tag core">built</span></div>
+          <div class="sitemap-page"><div class="dot"></div>Sign Up</div>
+          <div class="sitemap-page"><div class="dot"></div>Log In</div>
+          <div class="sitemap-page"><div class="dot"></div>Onboarding Quiz</div>
+          <div class="sitemap-page"><div class="dot"></div>Find Friends (import)</div>
+          <div class="sitemap-page"><div class="dot"></div>Verify Email</div>
+        </div>
+      </div>
+
+      <!-- Feed -->
+      <div class="sitemap-section" style="min-width:160px;max-width:200px">
+        <div class="sitemap-section-header" style="background:#5d0096">🏠 Feed</div>
+        <div class="sitemap-pages">
+          <div class="sitemap-page new"><div class="dot"></div>Home Feed<span class="tag social">social</span></div>
+          <div class="sitemap-page new"><div class="dot"></div>Notifications<span class="tag social">social</span></div>
+          <div class="sitemap-page new"><div class="dot"></div>Explore / Discover<span class="tag new">new</span></div>
+          <div class="sitemap-page new"><div class="dot"></div>Search (people/types)</div>
+        </div>
+      </div>
+
+      <!-- Profile -->
+      <div class="sitemap-section" style="min-width:160px;max-width:200px">
+        <div class="sitemap-section-header" style="background:#7c3aed">👤 Profile</div>
+        <div class="sitemap-pages">
+          <div class="sitemap-page new"><div class="dot"></div>My Profile<span class="tag social">social</span></div>
+          <div class="sitemap-page new"><div class="dot"></div>My Results (all tests)</div>
+          <div class="sitemap-page new"><div class="dot"></div>How Others See Me</div>
+          <div class="sitemap-page new"><div class="dot"></div>Edit Profile</div>
+          <div class="sitemap-page new"><div class="dot"></div>Privacy Settings</div>
+          <div class="sitemap-page new"><div class="dot"></div>Friend's Profile (view)</div>
+        </div>
+      </div>
+
+      <!-- Assessments -->
+      <div class="sitemap-section" style="min-width:160px;max-width:200px">
+        <div class="sitemap-section-header" style="background:#2563eb">📋 Assessments</div>
+        <div class="sitemap-pages">
+          <div class="sitemap-page key"><div class="dot"></div>Assessment Hub<span class="tag core">built</span></div>
+          <div class="sitemap-page key"><div class="dot"></div>Take Test (self)<span class="tag core">built</span></div>
+          <div class="sitemap-page new"><div class="dot"></div>Take Test for Friend<span class="tag social">social</span></div>
+          <div class="sitemap-page new"><div class="dot"></div>Test History</div>
+          <div class="sitemap-page key"><div class="dot"></div>Results Page<span class="tag core">built</span></div>
+          <div class="sitemap-page new"><div class="dot"></div>Request a Rating</div>
+        </div>
+      </div>
+
+      <!-- Compare -->
+      <div class="sitemap-section" style="min-width:160px;max-width:200px">
+        <div class="sitemap-section-header" style="background:#0891b2">⚡ Compare</div>
+        <div class="sitemap-pages">
+          <div class="sitemap-page new"><div class="dot"></div>Compare Hub<span class="tag new">new</span></div>
+          <div class="sitemap-page new"><div class="dot"></div>1-on-1 Comparison</div>
+          <div class="sitemap-page new"><div class="dot"></div>Group Comparison</div>
+          <div class="sitemap-page new"><div class="dot"></div>Compatibility Score</div>
+          <div class="sitemap-page new"><div class="dot"></div>Type Dynamics</div>
+          <div class="sitemap-page new"><div class="dot"></div>Relationship Map</div>
+        </div>
+      </div>
+
+      <!-- Social -->
+      <div class="sitemap-section" style="min-width:160px;max-width:200px">
+        <div class="sitemap-section-header" style="background:#059669">👥 Social</div>
+        <div class="sitemap-pages">
+          <div class="sitemap-page new"><div class="dot"></div>Friends / Connections<span class="tag social">social</span></div>
+          <div class="sitemap-page new"><div class="dot"></div>Pending Requests</div>
+          <div class="sitemap-page new"><div class="dot"></div>Suggested by Type</div>
+          <div class="sitemap-page new"><div class="dot"></div>Type Communities</div>
+          <div class="sitemap-page new"><div class="dot"></div>Leaderboard</div>
+        </div>
+      </div>
+
+    </div><!-- /sitemap-row -->
+
+    <!-- Navigation hierarchy note -->
+    <div style="background:white;border:1.5px solid #e5e7eb;border-radius:14px;padding:20px 24px;display:flex;gap:40px;flex-wrap:wrap">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Primary Nav (always visible)</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span class="tag social" style="font-size:12px;padding:5px 12px">🏠 Feed</span>
+          <span class="tag social" style="font-size:12px;padding:5px 12px">📋 Assessments</span>
+          <span class="tag social" style="font-size:12px;padding:5px 12px">⚡ Compare</span>
+          <span class="tag social" style="font-size:12px;padding:5px 12px">👥 Friends</span>
+          <span class="tag social" style="font-size:12px;padding:5px 12px">🔔 Notifications</span>
+          <span class="tag social" style="font-size:12px;padding:5px 12px">👤 Profile</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Legend</div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px;align-items:center">
+          <span><span class="tag core">built</span> Already implemented</span>
+          <span><span class="tag social">social</span> New social feature</span>
+          <span><span class="tag new">new</span> Planned</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="divider" />
+
+<!-- ═══════════════════════════════════════════
+     SECTION 2 – USER FLOWS
+     ═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">02 — User Flows</div>
+  <div class="section-title">Key Journeys</div>
+  <div class="section-desc">The four most important flows on the platform.</div>
+
+  <div class="flows">
+
+    <!-- Flow 1: Take test for a friend -->
+    <div class="flow-card">
+      <div class="flow-title"><span class="flow-emoji">🎯</span> Rate a Friend's Personality</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <div class="step-name">Go to friend's profile</div>
+            <div class="step-sub">Or accept a "rate me" request notification</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <div class="step-name">Choose test to rate them on</div>
+            <div class="step-sub">Enneagram, MBTI, Big Five — same questions, different framing: "Jamie tends to…"</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <div class="step-name">Complete the assessment</div>
+            <div class="step-sub">27 statements, same flow — phrased about the other person</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <div class="step-name">Submit rating</div>
+            <div class="step-sub">Friend is notified. They can see your rating vs. their self-rating</div>
+            <div class="step-branch">→ Goes into their "How others see me" tab</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">5</div>
+          <div class="step-text">
+            <div class="step-name">Comparison unlocked</div>
+            <div class="step-sub">Both can now compare self-score vs. peer-score side by side</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flow 2: Compare with someone -->
+    <div class="flow-card">
+      <div class="flow-title"><span class="flow-emoji">⚡</span> Compare Results with a Friend</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <div class="step-name">Open Compare page</div>
+            <div class="step-sub">Or click "Compare" on any friend's profile</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <div class="step-name">Select a friend</div>
+            <div class="step-sub">Search or pick from your connections list</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <div class="step-name">Choose test type</div>
+            <div class="step-sub">Enneagram, MBTI, Big Five — or "All" for a combined view</div>
+            <div class="step-branch">→ Only shows tests both have completed</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <div class="step-name">View comparison</div>
+            <div class="step-sub">Side-by-side scores, radar chart overlay, compatibility score</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">5</div>
+          <div class="step-text">
+            <div class="step-name">Share or save</div>
+            <div class="step-sub">Post to feed, export as image, or invite another friend to join</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flow 3: Onboarding -->
+    <div class="flow-card">
+      <div class="flow-title"><span class="flow-emoji">🚀</span> New User Onboarding</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <div class="step-name">Sign up</div>
+            <div class="step-sub">Email / Google / Apple — first name, profile photo</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <div class="step-name">Take first assessment</div>
+            <div class="step-sub">Enneagram is the default entry point (27q, 5 min)</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <div class="step-name">See your results</div>
+            <div class="step-sub">Full results page with type, wings, traits</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <div class="step-name">Find friends</div>
+            <div class="step-sub">Import contacts, search by name, or share invite link</div>
+            <div class="step-branch">→ Suggested by compatible type</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">5</div>
+          <div class="step-text">
+            <div class="step-name">Land on Feed</div>
+            <div class="step-sub">See friends' activity, get prompted to rate a connection</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flow 4: Request a rating -->
+    <div class="flow-card">
+      <div class="flow-title"><span class="flow-emoji">🙋</span> Request Others to Rate You</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <div class="step-name">Go to My Profile → "How others see me"</div>
+            <div class="step-sub">Shows a gap if no peer ratings yet</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <div class="step-name">Tap "Request a Rating"</div>
+            <div class="step-sub">Choose which test + which friends to ask</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <div class="step-name">Friends get a notification</div>
+            <div class="step-sub">"Jamie wants to know how you see them — take 5 min?"</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <div class="step-name">Results come in</div>
+            <div class="step-sub">Aggregated anonymously if 3+ raters, or named if only 1–2</div>
+            <div class="step-branch">→ Notified when each rating is submitted</div>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="step-num">5</div>
+          <div class="step-text">
+            <div class="step-name">See perception gap</div>
+            <div class="step-sub">Self vs. others radar chart, type match %, blind spots callout</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<hr class="divider" />
+
+<!-- ═══════════════════════════════════════════
+     SECTION 3 – WIREFRAMES
+     ═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">03 — Key Screens</div>
+  <div class="section-title">Screen Wireframes</div>
+  <div class="section-desc">Low-fidelity wireframes for the 6 most critical new screens.</div>
+
+  <div class="wireframes-grid">
+
+    <!-- ── SCREEN 1: HOME FEED ── -->
+    <div class="wireframe-card">
+      <div class="wf-label">
+        <div class="wf-label-text">🏠 Home Feed</div>
+        <div class="wf-label-sub" style="margin-left:auto">Primary landing after login</div>
+      </div>
+      <div class="wf-screen">
+        <div class="wf">
+          <div class="wf-nav">
+            <div class="wf-logo">M</div>
+            <div class="wf-nav-links">
+              <span class="wf-nav-link active">Feed</span>
+              <span class="wf-nav-link">Assessments</span>
+              <span class="wf-nav-link">Compare</span>
+              <span class="wf-nav-link">Friends</span>
+            </div>
+            <div class="wf-nav-right">
+              <div class="wf-notif">🔔<div class="wf-notif-dot"></div></div>
+              <div class="wf-avatar">J</div>
+            </div>
+          </div>
+          <div class="wf-body">
+            <!-- Left sidebar -->
+            <div class="wf-sidebar">
+              <div class="wf-sidebar-item active">
+                <span class="wf-sidebar-icon">🏠</span>
+                <span class="wf-sidebar-label">Feed</span>
+              </div>
+              <div class="wf-sidebar-item">
+                <span class="wf-sidebar-icon">📋</span>
+                <span class="wf-sidebar-label">Tests</span>
+              </div>
+              <div class="wf-sidebar-item">
+                <span class="wf-sidebar-icon">⚡</span>
+                <span class="wf-sidebar-label">Compare</span>
+              </div>
+              <div class="wf-sidebar-item">
+                <span class="wf-sidebar-icon">👥</span>
+                <span class="wf-sidebar-label">Friends</span>
+              </div>
+              <div class="wf-sidebar-item">
+                <span class="wf-sidebar-icon">👤</span>
+                <span class="wf-sidebar-label">Profile</span>
+              </div>
+            </div>
+
+            <!-- Main feed -->
+            <div class="wf-main" style="max-width:none">
+              <!-- Story/quick actions bar -->
+              <div style="display:flex;gap:8px;overflow:hidden">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0">
+                  <div style="width:38px;height:38px;border-radius:50%;border:2px dashed #d8b4fe;display:flex;align-items:center;justify-content:center;font-size:14px">+</div>
+                  <span style="font-size:8px;color:#9ca3af">Rate a friend</span>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0">
+                  <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#47077b,#8a1fde);display:flex;align-items:center;justify-content:center;color:white;font-size:10px;font-weight:700;border:2px solid #5d0096">S</div>
+                  <span style="font-size:8px;color:#5d0096;font-weight:600">Sara</span>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0">
+                  <div style="width:38px;height:38px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6b7280">M</div>
+                  <span style="font-size:8px;color:#9ca3af">Marcus</span>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0">
+                  <div style="width:38px;height:38px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#6b7280">T</div>
+                  <span style="font-size:8px;color:#9ca3af">Toya</span>
+                </div>
+              </div>
+
+              <!-- Feed item 1: friend completed test -->
+              <div class="wf-feed-item">
+                <div class="wf-row" style="gap:8px">
+                  <div class="wf-circle" style="width:28px;height:28px;font-size:9px">S</div>
+                  <div style="flex:1">
+                    <div style="font-size:11px;color:#374151"><strong>Sara</strong> completed the <span class="wf-mention">Enneagram</span></div>
+                    <div style="font-size:10px;color:#9ca3af">2 hours ago</div>
+                  </div>
+                  <span class="wf-tag">Type 4</span>
+                </div>
+                <div class="wf-box-purple" style="display:flex;align-items:center;gap:10px">
+                  <div style="font-size:18px">🎨</div>
+                  <div>
+                    <div style="font-weight:700;font-size:11px;color:#374151">Sara is a Type 4 · Individualist</div>
+                    <div style="font-size:10px;color:#9ca3af">Emotionally deep · Creative · Authentic</div>
+                  </div>
+                </div>
+                <div class="wf-row" style="gap:8px;margin-top:2px">
+                  <span class="wf-pill">Rate Sara's personality</span>
+                  <span class="wf-pill-outline">Compare with Sara</span>
+                </div>
+              </div>
+
+              <!-- Feed item 2: peer rating received -->
+              <div class="wf-feed-item">
+                <div class="wf-row" style="gap:8px">
+                  <div class="wf-circle" style="width:28px;height:28px;font-size:9px;background:linear-gradient(135deg,#0891b2,#0e7490)">M</div>
+                  <div style="flex:1">
+                    <div style="font-size:11px;color:#374151"><strong>Marcus</strong> rated your <span class="wf-mention">Enneagram</span></div>
+                    <div style="font-size:10px;color:#9ca3af">5 hours ago · Type 2 · Helper</div>
+                  </div>
+                  <span class="wf-tag">New rating</span>
+                </div>
+                <div style="display:flex;gap:8px">
+                  <div class="wf-box-gray" style="flex:1;text-align:center">
+                    <div style="font-size:9px;color:#9ca3af;margin-bottom:3px">You say</div>
+                    <div style="font-weight:700;font-size:13px;color:#5d0096">Type 2</div>
+                  </div>
+                  <div style="display:flex;align-items:center;font-size:12px;color:#9ca3af">vs</div>
+                  <div class="wf-box-gray" style="flex:1;text-align:center">
+                    <div style="font-size:9px;color:#9ca3af;margin-bottom:3px">Marcus says</div>
+                    <div style="font-weight:700;font-size:13px;color:#5d0096">Type 2</div>
+                  </div>
+                </div>
+                <span class="wf-pill" style="align-self:flex-start">See full comparison →</span>
+              </div>
+
+              <!-- Feed item 3: compare suggestion -->
+              <div class="wf-feed-item">
+                <div style="font-size:10px;color:#9ca3af;font-weight:600;text-transform:uppercase;letter-spacing:.5px">Suggested</div>
+                <div style="font-size:11px;color:#374151">You and <strong>Toya</strong> are both Type 9 — you'd likely see the world similarly 🌿</div>
+                <span class="wf-pill-outline" style="align-self:flex-start">Compare with Toya</span>
+              </div>
+            </div>
+
+            <!-- Right sidebar -->
+            <div class="wf-right">
+              <div style="font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px">Your types</div>
+              <div class="wf-box-gray">
+                <div style="font-size:9px;font-weight:700;color:#5d0096">Enneagram</div>
+                <div style="font-weight:800;font-size:14px;color:#374151">Type 2</div>
+                <div style="font-size:9px;color:#9ca3af">Helper</div>
+              </div>
+              <div class="wf-box-gray" style="opacity:.4">
+                <div style="font-size:9px;font-weight:700;color:#9ca3af">MBTI</div>
+                <div style="font-size:9px;color:#9ca3af">Not taken yet</div>
+                <span class="wf-pill" style="font-size:8px;margin-top:4px;display:inline-flex">Take →</span>
+              </div>
+              <div style="font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-top:4px">Pending</div>
+              <div style="font-size:10px;color:#374151">Marcus wants you to rate their <span style="color:#5d0096;font-weight:600">MBTI</span></div>
+              <span class="wf-pill" style="display:inline-flex;font-size:8px">Rate →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SCREEN 2: USER PROFILE ── -->
+    <div class="wireframe-card">
+      <div class="wf-label">
+        <div class="wf-label-text">👤 My Profile / Friend Profile</div>
+        <div class="wf-label-sub" style="margin-left:auto">Personality as identity</div>
+      </div>
+      <div class="wf-screen">
+        <div class="wf">
+          <div class="wf-nav">
+            <div class="wf-logo">M</div>
+            <div class="wf-nav-links">
+              <span class="wf-nav-link">Feed</span>
+              <span class="wf-nav-link">Assessments</span>
+              <span class="wf-nav-link">Compare</span>
+            </div>
+            <div class="wf-nav-right">
+              <div class="wf-notif">🔔</div>
+              <div class="wf-avatar">J</div>
+            </div>
+          </div>
+          <!-- Profile hero -->
+          <div style="background:linear-gradient(135deg,#47077b,#8a1fde);padding:16px 20px;display:flex;gap:12px;align-items:flex-end">
+            <div style="width:52px;height:52px;border-radius:50%;border:3px solid white;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px">J</div>
+            <div style="color:white;flex:1">
+              <div style="font-weight:800;font-size:14px">Jamie Carter</div>
+              <div style="font-size:10px;opacity:.8">Type 2 · Helper · 14 friends</div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <span class="wf-pill" style="background:rgba(255,255,255,.2);font-size:9px">Rate Jamie</span>
+              <span class="wf-pill" style="background:white;color:#5d0096;font-size:9px">Compare</span>
+            </div>
+          </div>
+          <!-- Profile tabs -->
+          <div class="wf-tabs" style="padding:0 16px;background:white">
+            <div class="wf-tab active">My Results</div>
+            <div class="wf-tab">How Others See Me</div>
+            <div class="wf-tab">Compare</div>
+            <div class="wf-tab">Friends (14)</div>
+          </div>
+          <div style="display:flex;gap:10px;padding:10px 16px;background:#f9fafb">
+            <!-- Results column -->
+            <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+              <div class="wf-box">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                  <div style="font-weight:700;font-size:11px;color:#374151">Enneagram Results</div>
+                  <span class="wf-tag">Type 2 · 78%</span>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:5px">
+                  {['2 · Helper · 78%','1 · Reformer · 65%','9 · Peacemaker · 58%'].map((r,i) => `
+                  <div style="display:flex;gap:6px;align-items:center">
+                    <div style="width:16px;height:16px;border-radius:50%;background:${i===0?'#5d0096':'#e5e7eb'};display:flex;align-items:center;justify-content:center;color:${i===0?'white':'#6b7280'};font-size:8px;font-weight:700">${i===0?'2':i===1?'1':'9'}</div>
+                    <div style="font-size:10px;color:#374151">${r}</div>
+                    <div class="wf-bar-bg"><div class="wf-bar-fill" style="width:${i===0?78:i===1?65:58}%"></div></div>
+                  </div>`).join('')}
+                </div>
+                <div style="display:flex;gap:6px;align-items:center;margin-top:4px">
+                  <div style="width:16px;height:16px;border-radius:50%;background:#5d0096;display:flex;align-items:center;justify-content:center;color:white;font-size:8px;font-weight:700">2</div>
+                  <div style="font-size:10px;color:#374151">2 · Helper · 78%</div>
+                  <div class="wf-bar-bg"><div class="wf-bar-fill" style="width:78%"></div></div>
+                </div>
+                <div style="display:flex;gap:6px;align-items:center">
+                  <div style="width:16px;height:16px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;color:#6b7280;font-size:8px;font-weight:700">1</div>
+                  <div style="font-size:10px;color:#374151">1 · Reformer · 65%</div>
+                  <div class="wf-bar-bg"><div class="wf-bar-fill" style="width:65%;background:#1802a0"></div></div>
+                </div>
+                <div style="display:flex;gap:6px;align-items:center">
+                  <div style="width:16px;height:16px;border-radius:50%;background:#e5e7eb;display:flex;align-items:center;justify-content:center;color:#6b7280;font-size:8px;font-weight:700">9</div>
+                  <div style="font-size:10px;color:#374151">9 · Peacemaker · 58%</div>
+                  <div class="wf-bar-bg"><div class="wf-bar-fill" style="width:58%;background:#78350f"></div></div>
+                </div>
+              </div>
+              <div class="wf-box" style="opacity:.5">
+                <div style="font-weight:700;font-size:11px;color:#374151;margin-bottom:4px">MBTI <span style="color:#9ca3af;font-weight:400">· Not taken</span></div>
+                <span class="wf-pill" style="font-size:9px">Take assessment →</span>
+              </div>
+              <div class="wf-box" style="opacity:.5">
+                <div style="font-weight:700;font-size:11px;color:#374151;margin-bottom:4px">Big Five <span style="color:#9ca3af;font-weight:400">· Not taken</span></div>
+                <span class="wf-pill" style="font-size:9px">Take assessment →</span>
+              </div>
+            </div>
+            <!-- Right mini sidebar -->
+            <div style="width:80px;display:flex;flex-direction:column;gap:8px">
+              <div style="font-size:9px;font-weight:700;color:#9ca3af">Ratings (3)</div>
+              <div class="wf-box-gray" style="padding:8px">
+                <div style="font-size:8px;color:#9ca3af">Others say</div>
+                <div style="font-weight:800;font-size:13px;color:#5d0096">Type 2</div>
+                <div style="font-size:8px;color:#9ca3af">3 raters</div>
+              </div>
+              <div style="font-size:9px;font-weight:700;color:#9ca3af;margin-top:4px">Friends</div>
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#0891b2,#0e7490);display:flex;align-items:center;justify-content:center;color:white;font-size:9px;font-weight:700">S</div>
+                <div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;color:white;font-size:9px;font-weight:700">M</div>
+                <div style="font-size:9px;color:#5d0096">+12 more</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SCREEN 3: RATE A FRIEND ── -->
+    <div class="wireframe-card">
+      <div class="wf-label">
+        <div class="wf-label-text">🎯 Rate a Friend's Personality</div>
+        <div class="wf-label-sub" style="margin-left:auto">Same quiz, different framing</div>
+      </div>
+      <div class="wf-screen">
+        <div class="wf">
+          <div class="wf-nav">
+            <div class="wf-logo">M</div>
+            <div style="font-size:11px;color:#374151;flex:1;text-align:center;font-weight:600">Rating Sara's Enneagram</div>
+            <div class="wf-nav-right"><div class="wf-avatar">J</div></div>
+          </div>
+          <div style="padding:12px 16px;display:flex;flex-direction:column;gap:12px">
+            <!-- Who you're rating banner -->
+            <div class="wf-box-gradient">
+              <div style="font-size:9px;opacity:.7;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">You're rating</div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:14px">S</div>
+                <div>
+                  <div style="color:white;font-weight:700;font-size:13px">Sara's Enneagram</div>
+                  <div style="color:rgba(255,255,255,.7);font-size:10px">Answer about Sara, not yourself</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Progress -->
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:10px;color:#9ca3af;margin-bottom:4px">
+                <span>Statement 8 of 27</span><span>30%</span>
+              </div>
+              <div style="height:4px;background:#f0f0f0;border-radius:100px">
+                <div style="height:4px;background:linear-gradient(90deg,#47077b,#8a1fde);border-radius:100px;width:30%"></div>
+              </div>
+            </div>
+
+            <!-- Question -->
+            <div class="wf-box">
+              <div style="font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">About Sara</div>
+              <div style="font-size:14px;font-weight:600;color:#111928;line-height:1.5;margin-bottom:14px">"Sara tends to put others' needs before her own without thinking about it."</div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                {['Strongly disagree','Somewhat disagree','Somewhat agree','Strongly agree'].map((l,i) => (
+                <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:1.5px solid ${i===3?'#5d0096':'#e5e7eb'};border-radius:10px;background:${i===3?'rgba(93,0,150,.06)':'white'}">
+                  <div style="width:14px;height:14px;border-radius:50%;border:2px solid ${i===3?'#5d0096':'#d1d5db'};display:flex;align-items:center;justify-content:center">
+                    ${i===3?'<div style="width:7px;height:7px;border-radius:50%;background:#5d0096"></div>':''}
+                  </div>
+                  <span style="font-size:11px;color:${i===3?'#5d0096':'#374151'};font-weight:${i===3?'600':'400'}">${l}</span>
+                </div>))}
+                <div style="padding:8px 10px;border:1.5px solid #e5e7eb;border-radius:10px"><div style="width:8px;height:8px;border-radius:50%;border:2px solid #d1d5db;display:inline-block;margin-right:8px"></div><span style="font-size:11px;color:#374151">Strongly disagree</span></div>
+                <div style="padding:8px 10px;border:1.5px solid #e5e7eb;border-radius:10px"><div style="width:8px;height:8px;border-radius:50%;border:2px solid #d1d5db;display:inline-block;margin-right:8px"></div><span style="font-size:11px;color:#374151">Somewhat disagree</span></div>
+                <div style="padding:8px 10px;border:1.5px solid #e5e7eb;border-radius:10px"><div style="width:8px;height:8px;border-radius:50%;border:2px solid #d1d5db;display:inline-block;margin-right:8px"></div><span style="font-size:11px;color:#374151">Somewhat agree</span></div>
+                <div style="padding:8px 10px;border:1.5px solid #5d0096;border-radius:10px;background:rgba(93,0,150,.06)"><div style="width:8px;height:8px;border-radius:50%;border:2px solid #5d0096;display:inline-block;margin-right:8px;background:#5d0096"></div><span style="font-size:11px;color:#5d0096;font-weight:600">Strongly agree</span></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:10px">
+                <button style="font-size:10px;color:#9ca3af;background:none;border:none;cursor:pointer">← Back</button>
+                <span class="wf-pill">Next →</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SCREEN 4: COMPARISON ── -->
+    <div class="wireframe-card">
+      <div class="wf-label">
+        <div class="wf-label-text">⚡ Results Comparison</div>
+        <div class="wf-label-sub" style="margin-left:auto">Cross-test, cross-person</div>
+      </div>
+      <div class="wf-screen">
+        <div class="wf">
+          <div class="wf-nav">
+            <div class="wf-logo">M</div>
+            <div style="font-size:11px;color:#374151;flex:1;text-align:center;font-weight:600">Compare</div>
+            <div class="wf-nav-right"><div class="wf-avatar">J</div></div>
+          </div>
+          <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+            <!-- Person selector row -->
+            <div style="display:flex;gap:8px;align-items:center">
+              <div class="wf-box" style="flex:1;display:flex;align-items:center;gap:8px;padding:8px 12px">
+                <div class="wf-circle" style="width:28px;height:28px;font-size:10px">J</div>
+                <div>
+                  <div style="font-weight:700;font-size:11px">Jamie (You)</div>
+                  <div style="font-size:9px;color:#9ca3af">Type 2 · Helper</div>
+                </div>
+              </div>
+              <div style="font-size:16px;color:#d1d5db">⟷</div>
+              <div class="wf-box" style="flex:1;display:flex;align-items:center;gap:8px;padding:8px 12px">
+                <div class="wf-circle" style="width:28px;height:28px;font-size:10px;background:linear-gradient(135deg,#0891b2,#0e7490)">S</div>
+                <div>
+                  <div style="font-weight:700;font-size:11px">Sara</div>
+                  <div style="font-size:9px;color:#9ca3af">Type 4 · Individualist</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Test selector tabs -->
+            <div class="wf-tabs" style="margin-bottom:0">
+              <div class="wf-tab active">Enneagram</div>
+              <div class="wf-tab" style="opacity:.4">MBTI</div>
+              <div class="wf-tab" style="opacity:.4">Big Five</div>
+              <div class="wf-tab">All Tests</div>
+            </div>
+
+            <!-- Compatibility score -->
+            <div class="wf-box-purple" style="display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <div style="font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px">Compatibility Score</div>
+                <div style="font-weight:800;font-size:22px;color:#5d0096">72%</div>
+                <div style="font-size:10px;color:#6b7280">Strong complementary pairing</div>
+              </div>
+              <div style="display:flex;gap:-6px">
+                <div class="wf-circle" style="width:32px;height:32px;font-size:11px;border:2px solid white">J</div>
+                <div class="wf-circle" style="width:32px;height:32px;font-size:11px;border:2px solid white;background:linear-gradient(135deg,#0891b2,#0e7490);margin-left:-8px">S</div>
+              </div>
+            </div>
+
+            <!-- Side by side scores -->
+            <div style="display:flex;gap:8px">
+              <div class="wf-compare-col">
+                <div class="wf-compare-label">Jamie</div>
+                <div class="wf-compare-row"><div class="wf-circle-sm">2</div><span style="font-size:10px;color:#374151">Helper · 78%</span></div>
+                <div class="wf-compare-row"><div class="wf-circle-sm" style="background:#1802a0">1</div><span style="font-size:10px;color:#374151">Reformer · 65%</span></div>
+                <div class="wf-compare-row"><div class="wf-circle-sm" style="background:#78350f">9</div><span style="font-size:10px;color:#374151">Peacemaker · 58%</span></div>
+              </div>
+              <!-- Spider overlay -->
+              <div class="wf-spider">Radar<br/>overlay</div>
+              <div class="wf-compare-col" style="align-items:flex-end">
+                <div class="wf-compare-label" style="text-align:right">Sara</div>
+                <div class="wf-compare-row"><div class="wf-circle-sm" style="background:#9c2780">4</div><span style="font-size:10px;color:#374151">Individual · 81%</span></div>
+                <div class="wf-compare-row"><div class="wf-circle-sm" style="background:#065f46">5</div><span style="font-size:10px;color:#374151">Investigator · 70%</span></div>
+                <div class="wf-compare-row"><div class="wf-circle-sm" style="background:#5d0096">2</div><span style="font-size:10px;color:#374151">Helper · 55%</span></div>
+              </div>
+            </div>
+
+            <!-- Insight callout -->
+            <div class="wf-box" style="background:#fffbeb;border-color:#fde68a">
+              <div style="font-size:10px;font-weight:700;color:#b45309;margin-bottom:3px">✨ Dynamic Insight</div>
+              <div style="font-size:10px;color:#6b7280">Helpers (2) and Individualists (4) often form deep bonds — you nurture Sara's emotional world; Sara helps you connect with your own feelings.</div>
+            </div>
+
+            <div style="display:flex;gap:6px">
+              <span class="wf-pill" style="flex:1;justify-content:center;font-size:9px">Share comparison</span>
+              <span class="wf-pill-outline" style="flex:1;justify-content:center;font-size:9px">Add to group</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SCREEN 5: HOW OTHERS SEE ME ── -->
+    <div class="wireframe-card">
+      <div class="wf-label">
+        <div class="wf-label-text">🪞 How Others See Me</div>
+        <div class="wf-label-sub" style="margin-left:auto">Self vs. peer perception gap</div>
+      </div>
+      <div class="wf-screen">
+        <div class="wf">
+          <div class="wf-nav">
+            <div class="wf-logo">M</div>
+            <div style="font-size:11px;flex:1;text-align:center;font-weight:600;color:#374151">Jamie's Profile</div>
+            <div class="wf-nav-right"><div class="wf-avatar">J</div></div>
+          </div>
+          <!-- Profile tabs -->
+          <div class="wf-tabs" style="padding:0 16px;background:white">
+            <div class="wf-tab">My Results</div>
+            <div class="wf-tab active">How Others See Me</div>
+            <div class="wf-tab">Compare</div>
+          </div>
+          <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+            <!-- Raters summary -->
+            <div style="display:flex;gap:8px;align-items:center">
+              <div style="display:flex;gap:-6px;margin-right:4px">
+                <div class="wf-circle" style="width:26px;height:26px;font-size:9px;border:2px solid white">S</div>
+                <div class="wf-circle" style="width:26px;height:26px;font-size:9px;border:2px solid white;background:linear-gradient(135deg,#0891b2,#0e7490);margin-left:-8px">M</div>
+                <div class="wf-circle" style="width:26px;height:26px;font-size:9px;border:2px solid white;background:linear-gradient(135deg,#059669,#047857);margin-left:-8px">T</div>
+              </div>
+              <div style="font-size:11px;color:#374151"><strong>3 friends</strong> have rated you</div>
+              <span class="wf-pill" style="margin-left:auto;font-size:9px">Request more</span>
+            </div>
+
+            <!-- Perception match card -->
+            <div class="wf-box-purple">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+                <div style="font-weight:700;font-size:11px;color:#5d0096">Enneagram · Perception Match</div>
+                <span class="wf-tag" style="background:#ede9fe">88% match</span>
+              </div>
+              <div style="display:flex;gap:16px">
+                <div style="text-align:center">
+                  <div style="font-size:9px;color:#9ca3af;margin-bottom:3px">You say</div>
+                  <div style="font-weight:800;font-size:20px;color:#5d0096">2</div>
+                  <div style="font-size:9px;color:#374151">Helper</div>
+                </div>
+                <div style="display:flex;align-items:center;font-size:20px;color:#d8b4fe">=</div>
+                <div style="text-align:center">
+                  <div style="font-size:9px;color:#9ca3af;margin-bottom:3px">Others say</div>
+                  <div style="font-weight:800;font-size:20px;color:#5d0096">2</div>
+                  <div style="font-size:9px;color:#374151">Helper</div>
+                </div>
+                <div style="flex:1">
+                  <div style="font-size:9px;color:#9ca3af;margin-bottom:3px">Raters</div>
+                  <div style="font-size:9px;color:#374151">S, M, T all agree</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Score comparison bars -->
+            <div class="wf-box">
+              <div style="font-weight:700;font-size:11px;color:#374151;margin-bottom:8px">Score Comparison</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:9px;margin-bottom:3px"><span style="color:#374151">Type 2 · Helper</span><span style="color:#9ca3af">You 78% · Others 82%</span></div>
+                  <div style="position:relative;height:6px;background:#f0f0f0;border-radius:100px">
+                    <div style="position:absolute;height:6px;background:#5d0096;border-radius:100px;width:78%"></div>
+                    <div style="position:absolute;height:6px;background:rgba(93,0,150,.3);border-radius:100px;width:82%;top:0"></div>
+                  </div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:9px;margin-bottom:3px"><span style="color:#374151">Type 1 · Reformer</span><span style="color:#9ca3af">You 65% · Others 55%</span></div>
+                  <div style="position:relative;height:6px;background:#f0f0f0;border-radius:100px">
+                    <div style="position:absolute;height:6px;background:#1802a0;border-radius:100px;width:65%"></div>
+                    <div style="position:absolute;height:6px;background:rgba(24,2,160,.25);border-radius:100px;width:55%;top:0"></div>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;gap:10px;margin-top:8px">
+                <div style="display:flex;align-items:center;gap:4px;font-size:9px"><div style="width:10px;height:4px;background:#5d0096;border-radius:100px"></div>You</div>
+                <div style="display:flex;align-items:center;gap:4px;font-size:9px"><div style="width:10px;height:4px;background:rgba(93,0,150,.3);border-radius:100px"></div>Others' avg</div>
+              </div>
+            </div>
+
+            <!-- Blind spot -->
+            <div class="wf-box" style="background:#fff7ed;border-color:#fed7aa">
+              <div style="font-size:10px;font-weight:700;color:#c2410c;margin-bottom:3px">🔍 Potential Blind Spot</div>
+              <div style="font-size:10px;color:#6b7280">Others rate your Type 1 (Reformer) 10% lower than you do. You may see yourself as more principled than others perceive.</div>
+            </div>
+
+            <span class="wf-pill" style="align-self:flex-start;font-size:9px">Request more ratings →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SCREEN 6: NOTIFICATIONS ── -->
+    <div class="wireframe-card">
+      <div class="wf-label">
+        <div class="wf-label-text">🔔 Notifications</div>
+        <div class="wf-label-sub" style="margin-left:auto">Social activity alerts</div>
+      </div>
+      <div class="wf-screen">
+        <div class="wf">
+          <div class="wf-nav">
+            <div class="wf-logo">M</div>
+            <div style="font-size:13px;font-weight:700;color:#374151;flex:1;padding-left:12px">Notifications</div>
+            <div class="wf-nav-right"><div class="wf-avatar">J</div></div>
+          </div>
+          <div style="padding:12px 16px;display:flex;flex-direction:column;gap:2px">
+            <div style="font-size:10px;font-weight:700;color:#9ca3af;padding:8px 0 4px;text-transform:uppercase;letter-spacing:.5px">Today</div>
+
+            <!-- Notif types -->
+            <div class="wf-notif-item">
+              <div class="wf-circle" style="width:32px;height:32px;font-size:11px;flex-shrink:0">S</div>
+              <div style="flex:1">
+                <div style="font-size:11px;color:#374151"><strong>Sara</strong> rated your <span class="wf-mention">Enneagram</span> — she sees you as a <span class="wf-mention">Type 2</span> ✅</div>
+                <div style="font-size:10px;color:#9ca3af;margin-top:2px">2 hours ago</div>
+                <span class="wf-pill" style="font-size:9px;margin-top:5px;display:inline-flex">See comparison →</span>
+              </div>
+            </div>
+
+            <div class="wf-notif-item" style="background:#fafafa;border-radius:10px;padding:8px">
+              <div class="wf-circle" style="width:32px;height:32px;font-size:11px;flex-shrink:0;background:linear-gradient(135deg,#0891b2,#0e7490)">M</div>
+              <div style="flex:1">
+                <div style="font-size:11px;color:#374151"><strong>Marcus</strong> wants you to rate their <span class="wf-mention">MBTI</span></div>
+                <div style="font-size:10px;color:#9ca3af;margin-top:2px">5 hours ago · Takes ~10 min</div>
+                <div style="display:flex;gap:6px;margin-top:5px">
+                  <span class="wf-pill" style="font-size:9px">Rate Marcus →</span>
+                  <span class="wf-pill-gray" style="font-size:9px">Dismiss</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-notif-item">
+              <div class="wf-circle" style="width:32px;height:32px;font-size:11px;flex-shrink:0;background:linear-gradient(135deg,#059669,#047857)">T</div>
+              <div style="flex:1">
+                <div style="font-size:11px;color:#374151"><strong>Toya</strong> completed the <span class="wf-mention">Big Five</span></div>
+                <div style="font-size:10px;color:#9ca3af;margin-top:2px">Yesterday · High Agreeableness</div>
+                <span class="wf-pill-outline" style="font-size:9px;margin-top:5px;display:inline-flex">Compare Big Five →</span>
+              </div>
+            </div>
+
+            <div style="font-size:10px;font-weight:700;color:#9ca3af;padding:10px 0 4px;text-transform:uppercase;letter-spacing:.5px">Earlier</div>
+
+            <div class="wf-notif-item">
+              <div style="width:32px;height:32px;border-radius:50%;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">💡</div>
+              <div style="flex:1">
+                <div style="font-size:11px;color:#374151">You and <strong>Marcus</strong> share the same <span class="wf-mention">Enneagram wing</span> — Type 2w1</div>
+                <div style="font-size:10px;color:#9ca3af;margin-top:2px">2 days ago</div>
+              </div>
+            </div>
+
+            <div class="wf-notif-item">
+              <div style="width:32px;height:32px;border-radius:50%;background:#f3f4f6;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">🤝</div>
+              <div style="flex:1">
+                <div style="font-size:11px;color:#374151"><strong>Alex Kim</strong> sent you a connection request</div>
+                <div style="font-size:10px;color:#9ca3af;margin-top:2px">Type 9 · Peacemaker · 3 days ago</div>
+                <div style="display:flex;gap:6px;margin-top:5px">
+                  <span class="wf-pill" style="font-size:9px">Accept</span>
+                  <span class="wf-pill-gray" style="font-size:9px">Decline</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wf-notif-item">
+              <div style="width:32px;height:32px;border-radius:50%;background:#ede9fe;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">📊</div>
+              <div style="flex:1">
+                <div style="font-size:11px;color:#374151">Your <span class="wf-mention">MBTI</span> assessment is still pending — complete it to unlock comparisons</div>
+                <div style="font-size:10px;color:#9ca3af;margin-top:2px">4 days ago</div>
+                <span class="wf-pill" style="font-size:9px;margin-top:5px;display:inline-flex">Take MBTI →</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /wireframes-grid -->
+</div>
+<hr class="divider" />
+
+<!-- ═══════════════════════════════════════════
+     SECTION 4 – FEATURE MATRIX
+     ═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">04 — Feature Matrix</div>
+  <div class="section-title">What each test type supports</div>
+  <div class="section-desc">Capabilities unlocked per assessment across self, peer, and social dimensions.</div>
+
+  <div class="matrix">
+    <div class="matrix-head">Feature</div>
+    <div class="matrix-head">Enneagram</div>
+    <div class="matrix-head">MBTI</div>
+    <div class="matrix-head">Big Five</div>
+    <div class="matrix-head">All Combined</div>
+    <div class="matrix-head">Peer Rating</div>
+
+    <div class="matrix-row-label">Self assessment</div>
+    <div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">—</div>
+
+    <div class="matrix-row-label">Rate a friend</div>
+    <div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">—</div><div class="matrix-cell">✅</div>
+
+    <div class="matrix-row-label">1-on-1 compare</div>
+    <div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div>
+
+    <div class="matrix-row-label">Group compare</div>
+    <div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">—</div>
+
+    <div class="matrix-row-label">Self vs. peer gap</div>
+    <div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div>
+
+    <div class="matrix-row-label">Compatibility score</div>
+    <div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">—</div>
+
+    <div class="matrix-row-label">Feed activity</div>
+    <div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">—</div><div class="matrix-cell">✅</div>
+
+    <div class="matrix-row-label">Profile badge</div>
+    <div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">✅</div><div class="matrix-cell">—</div><div class="matrix-cell">—</div>
+  </div>
+</div>
+<hr class="divider" />
+
+<!-- ═══════════════════════════════════════════
+     SECTION 5 – DATA MODEL
+     ═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">05 — Data Model</div>
+  <div class="section-title">Core entities</div>
+  <div class="section-desc">Simplified schema showing the social + assessment data relationships.</div>
+
+  <div class="models">
+    <div class="model-card">
+      <div class="model-header">User</div>
+      <div class="model-field"><span class="field-key">PK</span> id<span class="field-type">uuid</span></div>
+      <div class="model-field">name<span class="field-type">string</span></div>
+      <div class="model-field">email<span class="field-type">string</span></div>
+      <div class="model-field">avatar_url<span class="field-type">string?</span></div>
+      <div class="model-field">created_at<span class="field-type">timestamp</span></div>
+      <div class="model-field">privacy<span class="field-type">enum</span></div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-header">AssessmentResult</div>
+      <div class="model-field"><span class="field-key">PK</span> id<span class="field-type">uuid</span></div>
+      <div class="model-field"><span class="field-key">FK</span> user_id<span class="field-type">uuid</span></div>
+      <div class="model-field">test_type<span class="field-type">enum</span></div>
+      <div class="model-field">scores<span class="field-type">jsonb</span></div>
+      <div class="model-field">core_type<span class="field-type">string</span></div>
+      <div class="model-field">is_self<span class="field-type">boolean</span></div>
+      <div class="model-field"><span class="field-key">FK</span> rated_by<span class="field-type">uuid?</span></div>
+      <div class="model-field">taken_at<span class="field-type">timestamp</span></div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-header">Connection</div>
+      <div class="model-field"><span class="field-key">PK</span> id<span class="field-type">uuid</span></div>
+      <div class="model-field"><span class="field-key">FK</span> user_a<span class="field-type">uuid</span></div>
+      <div class="model-field"><span class="field-key">FK</span> user_b<span class="field-type">uuid</span></div>
+      <div class="model-field">status<span class="field-type">enum</span></div>
+      <div class="model-field">connected_at<span class="field-type">timestamp</span></div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-header">Comparison</div>
+      <div class="model-field"><span class="field-key">PK</span> id<span class="field-type">uuid</span></div>
+      <div class="model-field"><span class="field-key">FK</span> user_a<span class="field-type">uuid</span></div>
+      <div class="model-field"><span class="field-key">FK</span> user_b<span class="field-type">uuid</span></div>
+      <div class="model-field">test_type<span class="field-type">enum</span></div>
+      <div class="model-field">compat_score<span class="field-type">float</span></div>
+      <div class="model-field">insight<span class="field-type">string</span></div>
+      <div class="model-field">shared<span class="field-type">boolean</span></div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-header">RatingRequest</div>
+      <div class="model-field"><span class="field-key">PK</span> id<span class="field-type">uuid</span></div>
+      <div class="model-field"><span class="field-key">FK</span> requester<span class="field-type">uuid</span></div>
+      <div class="model-field"><span class="field-key">FK</span> rater<span class="field-type">uuid</span></div>
+      <div class="model-field">test_type<span class="field-type">enum</span></div>
+      <div class="model-field">status<span class="field-type">enum</span></div>
+      <div class="model-field">sent_at<span class="field-type">timestamp</span></div>
+      <div class="model-field">completed_at<span class="field-type">timestamp?</span></div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-header">Notification</div>
+      <div class="model-field"><span class="field-key">PK</span> id<span class="field-type">uuid</span></div>
+      <div class="model-field"><span class="field-key">FK</span> user_id<span class="field-type">uuid</span></div>
+      <div class="model-field">type<span class="field-type">enum</span></div>
+      <div class="model-field">payload<span class="field-type">jsonb</span></div>
+      <div class="model-field">read<span class="field-type">boolean</span></div>
+      <div class="model-field">created_at<span class="field-type">timestamp</span></div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-header">FeedActivity</div>
+      <div class="model-field"><span class="field-key">PK</span> id<span class="field-type">uuid</span></div>
+      <div class="model-field"><span class="field-key">FK</span> actor_id<span class="field-type">uuid</span></div>
+      <div class="model-field">verb<span class="field-type">enum</span></div>
+      <div class="model-field">object_type<span class="field-type">string</span></div>
+      <div class="model-field">object_id<span class="field-type">uuid</span></div>
+      <div class="model-field">audience<span class="field-type">enum</span></div>
+      <div class="model-field">created_at<span class="field-type">timestamp</span></div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-header">PerceptionGap</div>
+      <div class="model-field"><span class="field-key">FK</span> user_id<span class="field-type">uuid</span></div>
+      <div class="model-field">test_type<span class="field-type">enum</span></div>
+      <div class="model-field">self_scores<span class="field-type">jsonb</span></div>
+      <div class="model-field">peer_avg<span class="field-type">jsonb</span></div>
+      <div class="model-field">rater_count<span class="field-type">int</span></div>
+      <div class="model-field">match_pct<span class="field-type">float</span></div>
+      <div class="model-field">updated_at<span class="field-type">timestamp</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="background:linear-gradient(135deg,#47077b,#8a1fde);padding:32px 80px;display:flex;justify-content:space-between;align-items:center">
+  <div>
+    <div style="color:white;font-weight:800;font-size:18px;margin-bottom:4px">Maslow Social</div>
+    <div style="color:rgba(255,255,255,.6);font-size:13px">Wireframe Document · May 2026</div>
+  </div>
+  <div style="display:flex;gap:8px">
+    <span class="badge">6 screens wireframed</span>
+    <span class="badge">4 user flows</span>
+    <span class="badge">8 data models</span>
+  </div>
+</div>
+
+</body>
+</html>
