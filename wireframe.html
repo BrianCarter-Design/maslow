@@ -131,134 +131,6 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
 </head>
 <body>
 
-<!-- HEADER -->
-<div class="doc-header">
-  <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;opacity:.6;margin-bottom:12px">Maslow · Product Design</div>
-  <h1>Social Platform Wireframe</h1>
-  <p>A personality-first social network where your results are your profile — see friends' types, take tests for each other, and compare across all assessment types.</p>
-  <div class="badges">
-    <span class="badge">Sitemap</span>
-    <span class="badge">User Flows</span>
-    <span class="badge">Key Screens</span>
-    <span class="badge">Feature Matrix</span>
-    <span class="badge">Data Model</span>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════
-     SECTION 1 – SITEMAP
-     ═══════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-label">01 — Information Architecture</div>
-  <div class="section-title">Full Sitemap</div>
-  <div class="section-desc">Every page in the platform, organized by section. Purple dots = new social pages not yet built. Green = core. Yellow = planned.</div>
-
-  <div class="sitemap">
-    <div class="sitemap-row">
-
-      <!-- Auth -->
-      <div class="sitemap-section" style="min-width:160px;max-width:200px">
-        <div class="sitemap-section-header" style="background:#374151">🔐 Auth & Onboarding</div>
-        <div class="sitemap-pages">
-          <div class="sitemap-page key"><div class="dot"></div>Landing / Marketing<span class="tag core">built</span></div>
-          <div class="sitemap-page"><div class="dot"></div>Sign Up</div>
-          <div class="sitemap-page"><div class="dot"></div>Log In</div>
-          <div class="sitemap-page"><div class="dot"></div>Onboarding Quiz</div>
-          <div class="sitemap-page"><div class="dot"></div>Find Friends (import)</div>
-          <div class="sitemap-page"><div class="dot"></div>Verify Email</div>
-        </div>
-      </div>
-
-      <!-- Feed -->
-      <div class="sitemap-section" style="min-width:160px;max-width:200px">
-        <div class="sitemap-section-header" style="background:#5d0096">🏠 Feed</div>
-        <div class="sitemap-pages">
-          <div class="sitemap-page new"><div class="dot"></div>Home Feed<span class="tag social">social</span></div>
-          <div class="sitemap-page new"><div class="dot"></div>Notifications<span class="tag social">social</span></div>
-          <div class="sitemap-page new"><div class="dot"></div>Explore / Discover<span class="tag new">new</span></div>
-          <div class="sitemap-page new"><div class="dot"></div>Search (people/types)</div>
-        </div>
-      </div>
-
-      <!-- Profile -->
-      <div class="sitemap-section" style="min-width:160px;max-width:200px">
-        <div class="sitemap-section-header" style="background:#7c3aed">👤 Profile</div>
-        <div class="sitemap-pages">
-          <div class="sitemap-page new"><div class="dot"></div>My Profile<span class="tag social">social</span></div>
-          <div class="sitemap-page new"><div class="dot"></div>My Results (all tests)</div>
-          <div class="sitemap-page new"><div class="dot"></div>How Others See Me</div>
-          <div class="sitemap-page new"><div class="dot"></div>Edit Profile</div>
-          <div class="sitemap-page new"><div class="dot"></div>Privacy Settings</div>
-          <div class="sitemap-page new"><div class="dot"></div>Friend's Profile (view)</div>
-        </div>
-      </div>
-
-      <!-- Assessments -->
-      <div class="sitemap-section" style="min-width:160px;max-width:200px">
-        <div class="sitemap-section-header" style="background:#2563eb">📋 Assessments</div>
-        <div class="sitemap-pages">
-          <div class="sitemap-page key"><div class="dot"></div>Assessment Hub<span class="tag core">built</span></div>
-          <div class="sitemap-page key"><div class="dot"></div>Take Test (self)<span class="tag core">built</span></div>
-          <div class="sitemap-page new"><div class="dot"></div>Take Test for Friend<span class="tag social">social</span></div>
-          <div class="sitemap-page new"><div class="dot"></div>Test History</div>
-          <div class="sitemap-page key"><div class="dot"></div>Results Page<span class="tag core">built</span></div>
-          <div class="sitemap-page new"><div class="dot"></div>Request a Rating</div>
-        </div>
-      </div>
-
-      <!-- Compare -->
-      <div class="sitemap-section" style="min-width:160px;max-width:200px">
-        <div class="sitemap-section-header" style="background:#0891b2">⚡ Compare</div>
-        <div class="sitemap-pages">
-          <div class="sitemap-page new"><div class="dot"></div>Compare Hub<span class="tag new">new</span></div>
-          <div class="sitemap-page new"><div class="dot"></div>1-on-1 Comparison</div>
-          <div class="sitemap-page new"><div class="dot"></div>Group Comparison</div>
-          <div class="sitemap-page new"><div class="dot"></div>Compatibility Score</div>
-          <div class="sitemap-page new"><div class="dot"></div>Type Dynamics</div>
-          <div class="sitemap-page new"><div class="dot"></div>Relationship Map</div>
-        </div>
-      </div>
-
-      <!-- Social -->
-      <div class="sitemap-section" style="min-width:160px;max-width:200px">
-        <div class="sitemap-section-header" style="background:#059669">👥 Social</div>
-        <div class="sitemap-pages">
-          <div class="sitemap-page new"><div class="dot"></div>Friends / Connections<span class="tag social">social</span></div>
-          <div class="sitemap-page new"><div class="dot"></div>Pending Requests</div>
-          <div class="sitemap-page new"><div class="dot"></div>Suggested by Type</div>
-          <div class="sitemap-page new"><div class="dot"></div>Type Communities</div>
-          <div class="sitemap-page new"><div class="dot"></div>Leaderboard</div>
-        </div>
-      </div>
-
-    </div><!-- /sitemap-row -->
-
-    <!-- Navigation hierarchy note -->
-    <div style="background:white;border:1.5px solid #e5e7eb;border-radius:14px;padding:20px 24px;display:flex;gap:40px;flex-wrap:wrap">
-      <div>
-        <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Primary Nav (always visible)</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <span class="tag social" style="font-size:12px;padding:5px 12px">🏠 Feed</span>
-          <span class="tag social" style="font-size:12px;padding:5px 12px">📋 Assessments</span>
-          <span class="tag social" style="font-size:12px;padding:5px 12px">⚡ Compare</span>
-          <span class="tag social" style="font-size:12px;padding:5px 12px">👥 Friends</span>
-          <span class="tag social" style="font-size:12px;padding:5px 12px">🔔 Notifications</span>
-          <span class="tag social" style="font-size:12px;padding:5px 12px">👤 Profile</span>
-        </div>
-      </div>
-      <div>
-        <div style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">Legend</div>
-        <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px;align-items:center">
-          <span><span class="tag core">built</span> Already implemented</span>
-          <span><span class="tag social">social</span> New social feature</span>
-          <span><span class="tag new">new</span> Planned</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<hr class="divider" />
-
 <!-- ═══════════════════════════════════════════
      SECTION 2 – USER FLOWS
      ═══════════════════════════════════════════ -->
@@ -284,7 +156,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
           <div class="step-num">2</div>
           <div class="step-text">
             <div class="step-name">Choose test to rate them on</div>
-            <div class="step-sub">Enneagram, MBTI, Big Five — same questions, different framing: "Jamie tends to…"</div>
+            <div class="step-sub">Enneagram, 16 Personalities, Big Five — same questions, different framing: "Jamie tends to…"</div>
           </div>
         </div>
         <div class="flow-step">
@@ -334,7 +206,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
           <div class="step-num">3</div>
           <div class="step-text">
             <div class="step-name">Choose test type</div>
-            <div class="step-sub">Enneagram, MBTI, Big Five — or "All" for a combined view</div>
+            <div class="step-sub">Enneagram, 16 Personalities, Big Five — or "All" for a combined view</div>
             <div class="step-branch">→ Only shows tests both have completed</div>
           </div>
         </div>
@@ -464,7 +336,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
       <div class="wf-screen">
         <div class="wf">
           <div class="wf-nav">
-            <div class="wf-logo">M</div>
+            <img src="maslow_logo.png" style="height:18px;display:block" alt="Maslow" />
             <div class="wf-nav-links">
               <span class="wf-nav-link active">Feed</span>
               <span class="wf-nav-link">Assessments</span>
@@ -587,12 +459,12 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
                 <div style="font-size:9px;color:#9ca3af">Helper</div>
               </div>
               <div class="wf-box-gray" style="opacity:.4">
-                <div style="font-size:9px;font-weight:700;color:#9ca3af">MBTI</div>
+                <div style="font-size:9px;font-weight:700;color:#9ca3af">16 Personalities</div>
                 <div style="font-size:9px;color:#9ca3af">Not taken yet</div>
                 <span class="wf-pill" style="font-size:8px;margin-top:4px;display:inline-flex">Take →</span>
               </div>
               <div style="font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin-top:4px">Pending</div>
-              <div style="font-size:10px;color:#374151">Marcus wants you to rate their <span style="color:#5d0096;font-weight:600">MBTI</span></div>
+              <div style="font-size:10px;color:#374151">Marcus wants you to rate their <span style="color:#5d0096;font-weight:600">16 Personalities</span></div>
               <span class="wf-pill" style="display:inline-flex;font-size:8px">Rate →</span>
             </div>
           </div>
@@ -609,7 +481,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
       <div class="wf-screen">
         <div class="wf">
           <div class="wf-nav">
-            <div class="wf-logo">M</div>
+            <img src="maslow_logo.png" style="height:18px;display:block" alt="Maslow" />
             <div class="wf-nav-links">
               <span class="wf-nav-link">Feed</span>
               <span class="wf-nav-link">Assessments</span>
@@ -672,7 +544,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
                 </div>
               </div>
               <div class="wf-box" style="opacity:.5">
-                <div style="font-weight:700;font-size:11px;color:#374151;margin-bottom:4px">MBTI <span style="color:#9ca3af;font-weight:400">· Not taken</span></div>
+                <div style="font-weight:700;font-size:11px;color:#374151;margin-bottom:4px">16 Personalities <span style="color:#9ca3af;font-weight:400">· Not taken</span></div>
                 <span class="wf-pill" style="font-size:9px">Take assessment →</span>
               </div>
               <div class="wf-box" style="opacity:.5">
@@ -709,7 +581,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
       <div class="wf-screen">
         <div class="wf">
           <div class="wf-nav">
-            <div class="wf-logo">M</div>
+            <img src="maslow_logo.png" style="height:18px;display:block" alt="Maslow" />
             <div style="font-size:11px;color:#374151;flex:1;text-align:center;font-weight:600">Rating Sara's Enneagram</div>
             <div class="wf-nav-right"><div class="wf-avatar">J</div></div>
           </div>
@@ -772,7 +644,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
       <div class="wf-screen">
         <div class="wf">
           <div class="wf-nav">
-            <div class="wf-logo">M</div>
+            <img src="maslow_logo.png" style="height:18px;display:block" alt="Maslow" />
             <div style="font-size:11px;color:#374151;flex:1;text-align:center;font-weight:600">Compare</div>
             <div class="wf-nav-right"><div class="wf-avatar">J</div></div>
           </div>
@@ -799,7 +671,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
             <!-- Test selector tabs -->
             <div class="wf-tabs" style="margin-bottom:0">
               <div class="wf-tab active">Enneagram</div>
-              <div class="wf-tab" style="opacity:.4">MBTI</div>
+              <div class="wf-tab" style="opacity:.4">16 Personalities</div>
               <div class="wf-tab" style="opacity:.4">Big Five</div>
               <div class="wf-tab">All Tests</div>
             </div>
@@ -859,7 +731,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
       <div class="wf-screen">
         <div class="wf">
           <div class="wf-nav">
-            <div class="wf-logo">M</div>
+            <img src="maslow_logo.png" style="height:18px;display:block" alt="Maslow" />
             <div style="font-size:11px;flex:1;text-align:center;font-weight:600;color:#374151">Jamie's Profile</div>
             <div class="wf-nav-right"><div class="wf-avatar">J</div></div>
           </div>
@@ -952,7 +824,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
       <div class="wf-screen">
         <div class="wf">
           <div class="wf-nav">
-            <div class="wf-logo">M</div>
+            <img src="maslow_logo.png" style="height:18px;display:block" alt="Maslow" />
             <div style="font-size:13px;font-weight:700;color:#374151;flex:1;padding-left:12px">Notifications</div>
             <div class="wf-nav-right"><div class="wf-avatar">J</div></div>
           </div>
@@ -972,7 +844,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
             <div class="wf-notif-item" style="background:#fafafa;border-radius:10px;padding:8px">
               <div class="wf-circle" style="width:32px;height:32px;font-size:11px;flex-shrink:0;background:linear-gradient(135deg,#0891b2,#0e7490)">M</div>
               <div style="flex:1">
-                <div style="font-size:11px;color:#374151"><strong>Marcus</strong> wants you to rate their <span class="wf-mention">MBTI</span></div>
+                <div style="font-size:11px;color:#374151"><strong>Marcus</strong> wants you to rate their <span class="wf-mention">16 Personalities</span></div>
                 <div style="font-size:10px;color:#9ca3af;margin-top:2px">5 hours ago · Takes ~10 min</div>
                 <div style="display:flex;gap:6px;margin-top:5px">
                   <span class="wf-pill" style="font-size:9px">Rate Marcus →</span>
@@ -1015,9 +887,9 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
             <div class="wf-notif-item">
               <div style="width:32px;height:32px;border-radius:50%;background:#ede9fe;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">📊</div>
               <div style="flex:1">
-                <div style="font-size:11px;color:#374151">Your <span class="wf-mention">MBTI</span> assessment is still pending — complete it to unlock comparisons</div>
+                <div style="font-size:11px;color:#374151">Your <span class="wf-mention">16 Personalities</span> assessment is still pending — complete it to unlock comparisons</div>
                 <div style="font-size:10px;color:#9ca3af;margin-top:2px">4 days ago</div>
-                <span class="wf-pill" style="font-size:9px;margin-top:5px;display:inline-flex">Take MBTI →</span>
+                <span class="wf-pill" style="font-size:9px;margin-top:5px;display:inline-flex">Take 16 Personalities →</span>
               </div>
             </div>
           </div>
@@ -1040,7 +912,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
   <div class="matrix">
     <div class="matrix-head">Feature</div>
     <div class="matrix-head">Enneagram</div>
-    <div class="matrix-head">MBTI</div>
+    <div class="matrix-head">16 Personalities</div>
     <div class="matrix-head">Big Five</div>
     <div class="matrix-head">All Combined</div>
     <div class="matrix-head">Peer Rating</div>
@@ -1250,7 +1122,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
 
           <!-- App header -->
           <div class="m-header" style="background:white;padding:8px 16px 10px">
-            <div style="width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#47077b,#8a1fde);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:11px">M</div>
+            <img src="M_logo.png" style="height:26px;display:block" alt="M" />
             <span class="m-page-title" style="font-size:15px">Home</span>
             <div style="position:relative">
               <span style="font-size:18px">🔔</span>
@@ -1440,14 +1312,14 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
                 </div>
               </div>
 
-              <!-- MBTI locked -->
+              <!-- 16 Personalities locked -->
               <div class="m-card" style="opacity:.55">
                 <div class="m-row" style="justify-content:space-between">
-                  <div class="m-title">MBTI</div>
+                  <div class="m-title">16 Personalities</div>
                   <span class="m-tag" style="background:#f3f4f6;color:#9ca3af">Not taken</span>
                 </div>
                 <div class="m-sub">Complete this to unlock comparisons with friends</div>
-                <span class="m-pill-sm" style="align-self:flex-start">Take MBTI →</span>
+                <span class="m-pill-sm" style="align-self:flex-start">Take 16 Personalities →</span>
               </div>
 
               <!-- Big Five locked -->
@@ -1591,7 +1463,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
               <!-- Test tabs -->
               <div class="m-tabs" style="margin:0 -16px;border-radius:0">
                 <div class="m-tab active">Enneagram</div>
-                <div class="m-tab" style="opacity:.4">MBTI</div>
+                <div class="m-tab" style="opacity:.4">16 Personalities</div>
                 <div class="m-tab" style="opacity:.4">Big Five</div>
                 <div class="m-tab">All</div>
               </div>
@@ -1815,7 +1687,7 @@ hr.divider{border:none;border-top:1px solid #e5e7eb;margin:0 80px}
             <div style="background:rgba(93,0,150,.04);padding:12px 16px;border-bottom:1px solid #f3f4f6;display:flex;gap:10px;align-items:flex-start">
               <div class="m-avatar" style="width:36px;height:36px;font-size:13px;flex-shrink:0;background:linear-gradient(135deg,#0891b2,#0e7490)">M</div>
               <div style="flex:1">
-                <div class="m-body"><strong>Marcus</strong> wants you to rate their <span style="color:#5d0096;font-weight:600">MBTI</span></div>
+                <div class="m-body"><strong>Marcus</strong> wants you to rate their <span style="color:#5d0096;font-weight:600">16 Personalities</span></div>
                 <div class="m-sub" style="margin:3px 0 6px">5 hours ago · ~10 min</div>
                 <div style="display:flex;gap:6px">
                   <span class="m-pill-sm">Rate Marcus</span>
