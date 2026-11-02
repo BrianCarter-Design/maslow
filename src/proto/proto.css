@@ -515,7 +515,12 @@ body:has(.app) { background: #f1eff8; overscroll-behavior: none; }
 /* Intro and celebration fill exactly one screen: the button sits at the bottom,
    and only the middle scrolls if it doesn't fit. (Sticky alone wasn't reliable
    in iPhone Safari.) */
-.qz.qz-intro, .qz.qz-done { height: 100dvh; min-height: 0; overflow: hidden; }
+.qz.qz-intro, .qz.qz-done {
+  /* Pinned to the visible window rather than sized with 100dvh, which iPhone Safari
+     can leave stale after an in-app navigation (pushing the button below the toolbar) */
+  position: fixed; inset: 0;
+  height: auto; min-height: 0; overflow: hidden;
+}
 .qz-scroll, .qz-done__body {
   flex: 1; min-height: 0;
   display: flex; flex-direction: column; gap: 14px;
@@ -524,6 +529,10 @@ body:has(.app) { background: #f1eff8; overscroll-behavior: none; }
   scrollbar-width: none;
 }
 .qz-scroll::-webkit-scrollbar { display: none; }
-.qz.qz-intro .qz-cta, .qz.qz-done .qz-cta { position: static; flex: none; margin-top: 0; }
+.qz.qz-intro .qz-cta, .qz.qz-done .qz-cta {
+  position: static; flex: none; margin-top: 0;
+  /* No fade-in: Safari sometimes didn't repaint it until the page was scrolled */
+  animation: none !important; opacity: 1;
+}
 .qz-intro__top { flex: none; }
 .qz-scroll { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent); }
