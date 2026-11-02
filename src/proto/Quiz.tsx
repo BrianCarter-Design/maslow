@@ -1,9 +1,12 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import Face from '../components/BlobFace'
 import { getTest } from './tests'
 import { useProto } from './store'
+import { getFriend } from './social'
+import type { Friend } from './social'
+import { ResultSocial } from './friends'
 import { Arrow, Blob, CharacterArt, Scores } from './ui'
 
 // The answer scale: colour, label and blob shape for each step
@@ -23,7 +26,11 @@ export default function Quiz() {
   const { id = '' } = useParams()
   const test = getTest(id)
   const navigate = useNavigate()
-  const { save } = useProto()
+  const { save, giveResult, completeRequest } = useProto()
+  // ?for=<friend> takes the assessment about a friend; ?req=<id> answers a request
+  const [params] = useSearchParams()
+  const friend = getFriend(params.get('for') ?? '')
+  const requestId = params.get('req')
   const [phase, setPhase] = useState<'intro' | 'quiz' | 'done'>('intro')
   const [index, setIndex] = useState(0)
   const [answers, setAnswers] = useState<number[]>([])
@@ -49,7 +56,10 @@ export default function Quiz() {
     setAnswers(next)
     setTimeout(() => {
       if (index + 1 >= total) {
-        save(test!.id, { ...test!.score(next), date: monthYear() })
+        const result = { ...test!.score(next), date: monthYear() }
+        if (friend) giveResult(friend.id, test!.id, result)
+        else save(test!.id, result)
+        if (requestId) completeRequest(requestId)
         setPhase('done')
       } else {
         setIndex(index + 1)
@@ -87,8 +97,17 @@ export default function Quiz() {
     commit(slotAt(e.clientX))
   }
 
-  if (phase === 'intro') return <Intro name={test.name} total={total} minutes={test.minutes} onStart={() => setPhase('quiz')} />
-  if (phase === 'done') return <Celebrate name={test.name} total={total} onResults={() => navigate(`/play/test/${test.id}/result`, { replace: true })} />
+  if (phase === 'intro') return <Intro name={test.name} total={total} minutes={test.minutes} friend={friend} onStart={() => setPhase('quiz')} />
+  if (phase === 'done') {
+    return (
+      <Celebrate
+        name={test.name}
+        total={total}
+        friend={friend}
+        onResults={() => navigate(friend ? `/play/friend/${friend.id}` : `/play/test/${test.id}/result`, { replace: true })}
+      />
+    )
+  }
 
   return (
     <main className="app pf qz" style={{ '--tint': look.color } as CSSProperties}>
@@ -103,12 +122,12 @@ export default function Quiz() {
       </header>
 
       <section key={index} className="qz-stage">
-        <p className="pf-label">{test.name}</p>
+        <p className="pf-label">{friend ? `${test.name} · about ${friend.first}` : test.name}</p>
         <h1 className="qz-statement">{test.statements[index].text}</h1>
         <span className="pf-blob qz-hero" style={{ '--blob': look.color, borderRadius: look.shape } as CSSProperties} aria-hidden>
           <Face value={selected} size={120} />
         </span>
-        <p className="qz-label" key={selected ?? 0}>{selected ? SCALE[selected - 1].label : 'How much is this you?'}</p>
+        <p className="qz-label" key={selected ?? 0}>{selected ? (friend ? SCALE[selected - 1].label.replace(/\bme\b/, friend.first) : SCALE[selected - 1].label) : friend ? `How much is this ${friend.first}?` : 'How much is this you?'}</p>
       </section>
 
       <div className="qz-slider">
@@ -136,13 +155,13 @@ export default function Quiz() {
             <Face value={selected ?? 3} size={50} />
           </span>
         </div>
-        <div className="qz-ends"><span>Not me</span><span>So me</span></div>
+        <div className="qz-ends"><span>{friend ? `Not ${friend.first}` : 'Not me'}</span><span>{friend ? `So ${friend.first}` : 'So me'}</span></div>
       </div>
     </main>
   )
 }
 
-function Intro({ name, total, minutes, onStart }: { name: string; total: number; minutes: number; onStart: () => void }) {
+function Intro({ name, total, minutes, friend, onStart }: { name: string; total: number; minutes: number; friend?: Friend; onStart: () => void }) {
   const navigate = useNavigate()
   // Demo knob walks across the scale to show how answering works
   const [demo, setDemo] = useState(3)
@@ -159,7 +178,7 @@ function Intro({ name, total, minutes, onStart }: { name: string; total: number;
         <button className="pf-glass-btn" onClick={() => navigate(-1)} aria-label="Back">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
         </button>
-        <PageTitle kicker="Assessment" title={name} />
+        <PageTitle kicker={friend ? `Assessment about ${friend.first}` : 'Assessment'} title={name} />
         <span className="qz-top__ghost" />
       </header>
 
@@ -169,8 +188,17 @@ function Intro({ name, total, minutes, onStart }: { name: string; total: number;
           <Face value={demo} size={92} />
         </span>
         <p className="pf-label">{total} statements · ~{minutes} min</p>
-        <h1>Discover what makes <em>you, you!</em></h1>
-        <p className="qz-intro__sub">Rate a few statements about yourself and we’ll reveal your {name} result.</p>
+        {friend ? (
+          <>
+            <h1>How well do you know <em>{friend.first}?</em></h1>
+            <p className="qz-intro__sub">Rate each statement the way you think it describes {friend.first}. They’ll see how their friends see them.</p>
+          </>
+        ) : (
+          <>
+            <h1>Discover what makes <em>you, you!</em></h1>
+            <p className="qz-intro__sub">Rate a few statements about yourself and we’ll reveal your {name} result.</p>
+          </>
+        )}
       </section>
 
       <section className="pf-card qz-how">
@@ -189,18 +217,18 @@ function Intro({ name, total, minutes, onStart }: { name: string; total: number;
         </div>
         <p className="qz-label qz-label--small" key={demo}>{look.label}</p>
         <ol className="qz-steps">
-          <li><b>1</b>Read each statement</li>
+          <li><b>1</b>{friend ? `Read each statement as if it’s about ${friend.first}` : 'Read each statement'}</li>
           <li><b>2</b>Tap the face that fits, or slide along the bar</li>
         </ol>
       </section>
       </div>
 
-      <button className="pf-dark-btn qz-cta" onClick={onStart}>Start assessment <Arrow /></button>
+      <button className="pf-dark-btn qz-cta" onClick={onStart}>{friend ? `Start for ${friend.first}` : 'Start assessment'} <Arrow /></button>
     </main>
   )
 }
 
-function Celebrate({ name, total, onResults }: { name: string; total: number; onResults: () => void }) {
+function Celebrate({ name, total, friend, onResults }: { name: string; total: number; friend?: Friend; onResults: () => void }) {
   return (
     <main className="app pf qz qz-done" style={{ '--tint': '#7FD46F' } as CSSProperties}>
       <Confetti />
@@ -215,10 +243,19 @@ function Celebrate({ name, total, onResults }: { name: string; total: number; on
           <span className="qz-ring qz-ring--2" />
           <Blob className="qz-party" color="#7FD46F" size={170} face={120} mood={5} />
         </div>
-        <h1>Woohoo, you did it!</h1>
-        <p>All {total} statements answered. Your result is saved to your profile.</p>
+        {friend ? (
+          <>
+            <h1>Sent to {friend.first}! 💌</h1>
+            <p>{friend.first} will see how you see them. Curious what they think of you? Ask them back.</p>
+          </>
+        ) : (
+          <>
+            <h1>Woohoo, you did it!</h1>
+            <p>All {total} statements answered. Your result is saved to your profile.</p>
+          </>
+        )}
       </div>
-      <button className="pf-dark-btn qz-cta" onClick={onResults}>See my results <Arrow /></button>
+      <button className="pf-dark-btn qz-cta" onClick={onResults}>{friend ? `Compare with ${friend.first}` : 'See my results'} <Arrow /></button>
     </main>
   )
 }
@@ -316,6 +353,8 @@ export function ResultPage() {
         <p className="pf-label rs-label">About you</p>
         <p>{result.blurb}</p>
       </section>
+
+      <ResultSocial testId={test.id} />
 
       <div className="rs-actions">
         <button className="pf-dark-btn qz-cta" onClick={() => navigate('/play/profile')}>View my profile <Arrow /></button>

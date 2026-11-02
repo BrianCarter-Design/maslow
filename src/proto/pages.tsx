@@ -6,6 +6,7 @@ import { ArchitectBlob } from '../components/Characters'
 import { useProto } from './store'
 import { TESTS } from './tests'
 import { Arrow, Blob, CharacterArt, Heading, Screen, TabBar, TestCard, TopBar } from './ui'
+import { HomeSocial } from './friends'
 
 const PERSON = { first: 'Christopher', last: 'Franklin' }
 
@@ -25,6 +26,9 @@ function useCounts() {
 interface Note { id: string; day: 'Today' | 'Earlier'; time: string; title: string; body: string; color: string; shape: string; mood: number | Mood; to: string }
 
 const NOTES: Note[] = [
+  { id: 'about-maya', day: 'Today', time: '10:24', title: 'Maya took the Enneagram for you 👀', body: 'She sees you as The Achiever. Do you agree?', color: '#FF9EC7', shape: '50% 50% 42% 42% / 62% 62% 38% 38%', mood: 5, to: '/play/test/enneagram/result' },
+  { id: 'req-sam', day: 'Today', time: '9:40', title: 'Sam wants your take', body: 'Sam asked you to take the Enneagram about him. 2 minutes.', color: '#7FD46F', shape: '46% 54% 50% 50% / 50% 46% 54% 50%', mood: 'wow', to: '/play/friends' },
+  { id: 'twin-priya', day: 'Earlier', time: 'Yesterday', title: 'You have a personality twin!', body: 'Priya is an INTJ too. See what else you share.', color: '#FFC93C', shape: '42% 58% 62% 38% / 40% 44% 56% 60%', mood: 'wink', to: '/play/friend/priya' },
   { id: 'insight', day: 'Today', time: '9:12', title: 'New insight unlocked', body: 'You plan first, then commit. See what links your results.', color: '#FFC93C', shape: '42% 58% 62% 38% / 40% 44% 56% 60%', mood: 'wow', to: '/play/profile' },
   { id: 'next', day: 'Today', time: '8:30', title: 'Ready for your next assessment?', body: 'Love Languages takes about 2 minutes.', color: '#FF9EC7', shape: '50% 50% 42% 42% / 62% 62% 38% 38%', mood: 4, to: '/play/test/love' },
   { id: 'milestone', day: 'Earlier', time: 'Sep 14', title: 'Milestone reached: Blueprint', body: 'Common threads now appear across your assessments.', color: '#C9A7FF', shape: '34%', mood: 5, to: '/play/progress' },
@@ -201,6 +205,8 @@ export function HomePage() {
           <Blob className="hm-next__blob" color="#7FD46F" size={110} face={78} mood={5} />
         </section>
       )}
+
+      <HomeSocial />
 
       <Widgets />
 

@@ -5,6 +5,7 @@ import Face from '../components/BlobFace'
 import type { Mood } from '../components/BlobFace'
 import { Character } from '../components/Characters'
 import { propFor } from './tests'
+import { usePendingRequests } from './social'
 import type { TestDef, TestResult } from './tests'
 
 // Each new screen starts at the top. Without this the browser keeps the previous
@@ -71,15 +72,18 @@ export function TopBar({ title, sub, back, right }: { title: string; sub?: strin
 const TABS = [
   { to: '/play', label: 'Home', d: 'M4 11 12 4l8 7v9h-5v-6H9v6H4z', end: true },
   { to: '/play/tests', label: 'Assessments', d: 'M5 4h14v16H5zM9 9h6M9 13h6M9 17h3' },
+  { to: '/play/friends', label: 'Friends', d: 'M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 6.5M18 14.5a6 6 0 0 1 3.5 5.5' },
   { to: '/play/progress', label: 'Progress', d: 'M5 20V10M12 20V4M19 20v-7' },
   { to: '/play/profile', label: 'Profile', d: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0' },
 ]
 
 export function TabBar() {
+  const pending = usePendingRequests().length
   return (
     <nav className="pf-tabs" aria-label="Main">
       {TABS.map((t) => (
         <NavLink key={t.to} to={t.to} end={t.end} className={({ isActive }) => (isActive ? 'is-active' : '')}>
+          {t.to === '/play/friends' && pending > 0 && <i className="pf-tabs__badge" aria-label={`${pending} requests`}>{pending}</i>}
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={t.d} /></svg>
           {t.label}
         </NavLink>
