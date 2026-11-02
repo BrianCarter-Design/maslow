@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import Face from '../components/BlobFace'
@@ -31,6 +31,11 @@ export default function Quiz() {
   const locked = useRef(false)
   const dragging = useRef(false)
   const trackRef = useRef<HTMLDivElement>(null)
+
+  // Intro, questions and celebration share one address, so reset the scroll as they change
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [phase])
 
   if (!test) return <Navigate to="/play/tests" replace />
   const total = test.statements.length

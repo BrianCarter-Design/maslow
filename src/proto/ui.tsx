@@ -1,10 +1,22 @@
+import { useLayoutEffect } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import Face from '../components/BlobFace'
 import type { Mood } from '../components/BlobFace'
 import { Character } from '../components/Characters'
 import { propFor } from './tests'
 import type { TestDef, TestResult } from './tests'
+
+// Each new screen starts at the top. Without this the browser keeps the previous
+// page's scroll position, so opening an assessment from far down a long page
+// landed on an empty, scrolled-down screen.
+export function ScrollToTop() {
+  const { pathname } = useLocation()
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+  return null
+}
 
 // Small matte clay blob with a face
 export function Blob({ color, shape = '50%', size, face, mood, muted, className = '' }: {

@@ -4,6 +4,7 @@ import Assessment from './pages/Assessment'
 import Results from './pages/Results'
 import { ProtoProvider } from './proto/store'
 import Quiz, { ResultPage } from './proto/Quiz'
+import { ScrollToTop } from './proto/ui'
 import { CharacterPage, HomePage, NotificationsPage, ProfilePage, ProgressPage, TestsPage } from './proto/pages'
 import './proto/proto.css'
 
@@ -14,7 +15,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/assessment/:id" element={<Assessment />} />
         <Route path="/results/:id" element={<Results />} />
-        <Route path="/play" element={<ProtoProvider><Outlet /></ProtoProvider>}>
+        <Route path="/play" element={<ProtoProvider><ScrollToTop /><Outlet /></ProtoProvider>}>
           <Route index element={<HomePage />} />
           <Route path="tests" element={<TestsPage />} />
           <Route path="progress" element={<ProgressPage />} />
