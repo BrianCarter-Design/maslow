@@ -17,27 +17,6 @@ const SCALE = [
 const IDLE = { color: '#CDBEF7', shape: '46%' }
 const COMMIT_DELAY = 420
 
-// Short synthesized tick, rising in pitch from "Not me" to "So me"
-const TICK_NOTES = [392, 440, 523, 587, 659]
-let audio: AudioContext | null = null
-function tick(value: number) {
-  try {
-    audio ??= new AudioContext()
-    if (audio.state === 'suspended') void audio.resume()
-    const t = audio.currentTime
-    const osc = audio.createOscillator()
-    const gain = audio.createGain()
-    osc.type = 'triangle'
-    osc.frequency.setValueAtTime(TICK_NOTES[value - 1], t)
-    gain.gain.setValueAtTime(0.0001, t)
-    gain.gain.exponentialRampToValueAtTime(0.25, t + 0.005)
-    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.09)
-    osc.connect(gain).connect(audio.destination)
-    osc.start(t)
-    osc.stop(t + 0.1)
-  } catch { /* audio unavailable */ }
-}
-
 const monthYear = () => new Date().toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })
 
 export default function Quiz() {
@@ -90,14 +69,12 @@ export default function Quiz() {
     if (locked.current) return
     dragging.current = true
     e.currentTarget.setPointerCapture(e.pointerId)
-    const v = slotAt(e.clientX)
-    tick(v)
-    setSelected(v)
+    setSelected(slotAt(e.clientX))
   }
   function onMove(e: ReactPointerEvent<HTMLDivElement>) {
     if (!dragging.current) return
     const v = slotAt(e.clientX)
-    if (v !== selected) { tick(v); setSelected(v) }
+    if (v !== selected) setSelected(v)
   }
   function onUp(e: ReactPointerEvent<HTMLDivElement>) {
     if (!dragging.current) return
@@ -105,7 +82,7 @@ export default function Quiz() {
     commit(slotAt(e.clientX))
   }
 
-  if (phase === 'intro') return <Intro name={test.name} color={test.color} total={total} minutes={test.minutes} onStart={() => setPhase('quiz')} />
+  if (phase === 'intro') return <Intro name={test.name} total={total} minutes={test.minutes} onStart={() => setPhase('quiz')} />
   if (phase === 'done') return <Celebrate total={total} onResults={() => navigate(`/play/test/${test.id}/result`, { replace: true })} />
 
   return (
@@ -161,7 +138,7 @@ export default function Quiz() {
   )
 }
 
-function Intro({ name, color, total, minutes, onStart }: { name: string; color: string; total: number; minutes: number; onStart: () => void }) {
+function Intro({ name, total, minutes, onStart }: { name: string; total: number; minutes: number; onStart: () => void }) {
   const navigate = useNavigate()
   // Demo knob walks across the scale to show how answering works
   const [demo, setDemo] = useState(3)
@@ -173,7 +150,7 @@ function Intro({ name, color, total, minutes, onStart }: { name: string; color: 
   }, [])
   const look = SCALE[demo - 1]
   return (
-    <main className="app pf qz" style={{ '--tint': color } as CSSProperties}>
+    <main className="app pf qz qz-intro" style={{ '--tint': look.color } as CSSProperties}>
       <header className="qz-top">
         <button className="pf-glass-btn" onClick={() => navigate(-1)} aria-label="Back">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
@@ -184,19 +161,13 @@ function Intro({ name, color, total, minutes, onStart }: { name: string; color: 
         <span className="qz-top__ghost" />
       </header>
 
-      <section className="pf-hero qz-intro__card">
-        <div className="pf-hero__stage qz-intro__stage" style={{ '--blob': color } as CSSProperties}>
-          <span className="pf-status"><i />{name}</span>
-          <span className="pf-blob qz-intro__blob" style={{ '--blob': look.color, borderRadius: look.shape } as CSSProperties} aria-hidden>
-            <Face value={demo} size={96} />
-          </span>
-          <span className="pf-chip pf-chip--a">{total} statements</span>
-          <span className="pf-chip pf-chip--b">~{minutes} min</span>
-        </div>
-        <div className="qz-intro__copy">
-          <h1>Discover what makes <em>you, you!</em></h1>
-          <p>Rate a few statements about yourself and we’ll reveal your {name} result.</p>
-        </div>
+      <section className="qz-intro__top">
+        <span className="pf-blob qz-intro__blob" style={{ '--blob': look.color, borderRadius: look.shape } as CSSProperties} aria-hidden>
+          <Face value={demo} size={92} />
+        </span>
+        <p className="pf-label">{name} · {total} statements · ~{minutes} min</p>
+        <h1>Discover what makes <em>you, you!</em></h1>
+        <p className="qz-intro__sub">Rate a few statements about yourself and we’ll reveal your {name} result.</p>
       </section>
 
       <section className="pf-card qz-how">
@@ -221,7 +192,7 @@ function Intro({ name, color, total, minutes, onStart }: { name: string; color: 
         </ol>
       </section>
 
-      <button className="pf-dark-btn qz-cta" onClick={onStart}>Start test <Arrow /></button>
+      <button className="pf-dark-btn qz-cta" onClick={onStart}>Start assessment <Arrow /></button>
     </main>
   )
 }
@@ -318,7 +289,7 @@ export function ResultPage() {
       <section className="pf-hero">
         <div className="pf-hero__stage rs-stage" style={{ '--blob': test.color } as CSSProperties}>
           <span className="pf-status"><i />Saved · {result.date}</span>
-          <div className="pf-hero__art"><CharacterArt kind={result.character} color={test.color} size={200} id={`result-${test.id}`} /></div>
+          <div className="pf-hero__art"><CharacterArt testId={test.id} result={result} color={test.color} size={200} id={`result-${test.id}`} /></div>
           <span className="pf-chip pf-chip--a">{test.name}</span>
           <p className="pf-note" aria-hidden>
             <svg width="26" height="30" viewBox="0 0 26 30" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M20 28C8 24 4 14 8 3M8 3 3 8M8 3l5 4" /></svg>
@@ -344,7 +315,7 @@ export function ResultPage() {
 
       <div className="rs-actions">
         <button className="pf-dark-btn qz-cta" onClick={() => navigate('/play/profile')}>View my profile <Arrow /></button>
-        <button className="rs-ghost" onClick={() => navigate(`/play/test/${test.id}`)}>Retake test</button>
+        <button className="rs-ghost" onClick={() => navigate(`/play/test/${test.id}`)}>Retake assessment</button>
       </div>
     </main>
   )

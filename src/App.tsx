@@ -4,7 +4,7 @@ import Assessment from './pages/Assessment'
 import Results from './pages/Results'
 import { ProtoProvider } from './proto/store'
 import Quiz, { ResultPage } from './proto/Quiz'
-import { CharacterPage, HomePage, ProfilePage, ProgressPage, TestsPage } from './proto/pages'
+import { CharacterPage, HomePage, NotificationsPage, ProfilePage, ProgressPage, TestsPage } from './proto/pages'
 import './proto/proto.css'
 
 export default function App() {
@@ -20,6 +20,7 @@ export default function App() {
           <Route path="progress" element={<ProgressPage />} />
           <Route path="profile" element={<ProfilePage />} />
           <Route path="character" element={<CharacterPage />} />
+          <Route path="notifications" element={<NotificationsPage />} />
           <Route path="test/:id" element={<Quiz />} />
           <Route path="test/:id/result" element={<ResultPage />} />
           <Route path="enneagram" element={<Navigate to="/play/test/enneagram" replace />} />

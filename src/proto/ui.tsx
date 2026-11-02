@@ -2,8 +2,9 @@ import type { CSSProperties, ReactNode } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import Face from '../components/BlobFace'
 import type { Mood } from '../components/BlobFace'
-import { ArchitectBlob, ClayBlob, InvestigatorBlob } from '../components/Characters'
-import type { CharacterKind, TestDef, TestResult } from './tests'
+import { Character } from '../components/Characters'
+import { propFor } from './tests'
+import type { TestDef, TestResult } from './tests'
 
 // Small matte clay blob with a face
 export function Blob({ color, shape = '50%', size, face, mood, muted, className = '' }: {
@@ -27,10 +28,8 @@ export function Blob({ color, shape = '50%', size, face, mood, muted, className 
 }
 
 // Full character illustration for a result
-export function CharacterArt({ kind, color, size, id }: { kind?: CharacterKind; color: string; size: number; id: string }) {
-  if (kind === 'investigator') return <InvestigatorBlob size={size} color={color} />
-  if (kind === 'architect') return <ArchitectBlob size={size} color={color} />
-  return <ClayBlob id={id} size={size} color={color} />
+export function CharacterArt({ testId, result, color, size, id }: { testId: string; result: TestResult; color: string; size: number; id: string }) {
+  return <Character kind={propFor(testId, result)} color={color} size={size} id={id} />
 }
 
 export function Screen({ children, className = '', style }: { children: ReactNode; className?: string; style?: CSSProperties }) {
@@ -59,7 +58,7 @@ export function TopBar({ title, sub, back, right }: { title: string; sub?: strin
 
 const TABS = [
   { to: '/play', label: 'Home', d: 'M4 11 12 4l8 7v9h-5v-6H9v6H4z', end: true },
-  { to: '/play/tests', label: 'Tests', d: 'M5 4h14v16H5zM9 9h6M9 13h6M9 17h3' },
+  { to: '/play/tests', label: 'Assessments', d: 'M5 4h14v16H5zM9 9h6M9 13h6M9 17h3' },
   { to: '/play/progress', label: 'Progress', d: 'M5 20V10M12 20V4M19 20v-7' },
   { to: '/play/profile', label: 'Profile', d: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0' },
 ]
@@ -114,7 +113,7 @@ export function TestCard({ test, result, delay = 0 }: { test: TestDef; result?: 
           </button>
         ) : (
           <button className="pf-take" onClick={open}>
-            Take test
+            Take assessment
             <span><Arrow size={12} /></span>
           </button>
         )}
@@ -124,7 +123,7 @@ export function TestCard({ test, result, delay = 0 }: { test: TestDef; result?: 
         <>
           <div className="pf-card__hero">
             <p className="pf-card__result">{result!.code}<span>{result!.name}</span></p>
-            <span className="pf-card__art"><CharacterArt kind={result!.character} color={test.color} size={92} id={`card-${test.id}`} /></span>
+            <span className="pf-card__art"><CharacterArt testId={test.id} result={result!} color={test.color} size={92} id={`card-${test.id}`} /></span>
           </div>
           <Scores scores={result!.scores} />
         </>

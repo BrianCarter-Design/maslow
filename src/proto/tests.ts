@@ -1,10 +1,9 @@
 import { ENNEAGRAM_QUESTIONS } from '../data/enneagramQuestions'
 import { getType } from '../data/enneagramTypes'
+import type { PropKind } from '../components/Characters'
 
 // Prototype test catalogue. Every test is five quick statements answered on the
 // same 1–5 face slider, so one quiz engine runs them all.
-
-export type CharacterKind = 'investigator' | 'architect'
 
 export interface Score { label: string; pct: number; color: string }
 
@@ -14,7 +13,6 @@ export interface TestResult {
   name: string // e.g. "The Investigator"
   blurb: string
   scores: Score[]
-  character?: CharacterKind
 }
 
 interface Statement { text: string; key: string }
@@ -81,7 +79,6 @@ export const TESTS: TestDef[] = [
         name: `The ${top.name}`,
         blurb: top.description,
         scores: scores.slice(0, 3).map((s) => ({ label: getType(s.type).name, pct: s.pct, color: TYPE_COLORS[s.type] })),
-        character: top.number === 5 ? 'investigator' : undefined,
       }
     },
   },
@@ -108,7 +105,6 @@ export const TESTS: TestDef[] = [
         name: `The ${SIXTEEN_NAMES[code]}`,
         blurb: `${code}s combine ${axis.map((a) => a.label.toLowerCase()).join(', ')} preferences into a distinctive way of seeing the world.`,
         scores: axis.map(({ label, pct, color }) => ({ label, pct, color })),
-        character: code === 'INTJ' ? 'architect' : undefined,
       }
     },
   },
@@ -203,12 +199,12 @@ export const getTest = (id: string) => TESTS.find((t) => t.id === id)
 // Sample results so the prototype opens on a lived-in profile
 export const SEED_RESULTS: Record<string, TestResult> = {
   enneagram: {
-    date: 'Mar 2026', code: 'Type 5', name: 'The Investigator', character: 'investigator',
+    date: 'Mar 2026', code: 'Type 5', name: 'The Investigator',
     blurb: getType(5).description,
     scores: [{ label: 'Investigator', pct: 84, color: '#6FD6C8' }, { label: 'Individualist', pct: 66, color: '#C9A7FF' }, { label: 'Reformer', pct: 52, color: '#8FB5FF' }],
   },
   sixteen: {
-    date: 'Jun 2026', code: 'INTJ', name: 'The Architect', character: 'architect',
+    date: 'Jun 2026', code: 'INTJ', name: 'The Architect',
     blurb: 'Imaginative and strategic thinkers with a plan for everything. INTJs build ideas carefully and quietly.',
     scores: [{ label: 'Introverted', pct: 72, color: '#9FD8FF' }, { label: 'Intuitive', pct: 64, color: '#FFC93C' }, { label: 'Thinking', pct: 58, color: '#7FD46F' }, { label: 'Judging', pct: 61, color: '#FF9EC7' }],
   },
@@ -217,4 +213,32 @@ export const SEED_RESULTS: Record<string, TestResult> = {
     blurb: 'Curious and imaginative, you are energised by new ideas and experiences.',
     scores: [{ label: 'Openness', pct: 82, color: '#C9A7FF' }, { label: 'Conscientious', pct: 68, color: '#8FB5FF' }, { label: 'Agreeable', pct: 55, color: '#7FD46F' }, { label: 'Sensitivity', pct: 40, color: '#FF8A8A' }, { label: 'Extraversion', pct: 31, color: '#FFA36B' }],
   },
+}
+
+// Every result gets a character prop, worked out from the result itself so
+// results saved earlier get one too
+const ENNEAGRAM_PROPS: Record<number, PropKind> = {
+  1: 'clipboard', 2: 'heart', 3: 'trophy', 4: 'beret', 5: 'investigator',
+  6: 'shield', 7: 'partyhat', 8: 'glove', 9: 'sprout',
+}
+const RESULT_PROPS: Record<string, PropKind> = {
+  // Big Five
+  'The Explorer': 'compass', 'The Organiser': 'clipboard', 'The Connector': 'speech', 'The Peacekeeper': 'heart', 'The Feeler': 'cloud',
+  // Love Languages (headline)
+  'Words of Affirmation': 'speech', 'Quality Time': 'hourglass', 'Receiving Gifts': 'gift', 'Acts of Service': 'wrench', 'Physical Touch': 'heart',
+  // DISC
+  'The Driver': 'lightning', 'The Inspirer': 'megaphone', 'The Supporter': 'shield', 'The Analyst': 'book',
+  // Strengths
+  'The Strategist': 'pawn', 'The Achiever': 'trophy', 'The Learner': 'book', 'The Empath': 'heart', 'The Arranger': 'clipboard',
+}
+
+export function propFor(testId: string, result: TestResult): PropKind | undefined {
+  if (testId === 'enneagram') return ENNEAGRAM_PROPS[Number(result.code.replace(/\D/g, ''))]
+  if (testId === 'sixteen') {
+    const c = result.code
+    if (c === 'INTJ') return 'architect'
+    if (c[1] === 'N') return c[2] === 'T' ? 'lightbulb' : 'beret'
+    return c[3] === 'J' ? 'clipboard' : 'sunglasses'
+  }
+  return RESULT_PROPS[result.code] ?? RESULT_PROPS[result.name]
 }

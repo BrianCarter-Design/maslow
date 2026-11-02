@@ -7,7 +7,7 @@ import { useProto } from './store'
 import { TESTS } from './tests'
 import { Arrow, Blob, CharacterArt, Heading, Screen, TabBar, TestCard, TopBar } from './ui'
 
-const PERSON = { first: 'Alex', last: 'Miller' }
+const PERSON = { first: 'Christopher', last: 'Franklin' }
 
 const THREADS: { title: string; source: string; color: string; shape: string; mood: number | Mood }[] = [
   { title: 'Recharges alone', source: 'Type 5 · Introverted 72%', color: '#9FD8FF', shape: '50%', mood: 'rest' },
@@ -21,9 +21,78 @@ function useCounts() {
   return { results, done, total: TESTS.length, pct: Math.round((done / TESTS.length) * 100) }
 }
 
-function Bell() {
+/* ---------- Notifications ---------- */
+interface Note { id: string; day: 'Today' | 'Earlier'; time: string; title: string; body: string; color: string; shape: string; mood: number | Mood; to: string }
+
+const NOTES: Note[] = [
+  { id: 'insight', day: 'Today', time: '9:12', title: 'New insight unlocked', body: 'You plan first, then commit. See what links your results.', color: '#FFC93C', shape: '42% 58% 62% 38% / 40% 44% 56% 60%', mood: 'wow', to: '/play/profile' },
+  { id: 'next', day: 'Today', time: '8:30', title: 'Ready for your next assessment?', body: 'Love Languages takes about 2 minutes.', color: '#FF9EC7', shape: '50% 50% 42% 42% / 62% 62% 38% 38%', mood: 4, to: '/play/test/love' },
+  { id: 'milestone', day: 'Earlier', time: 'Sep 14', title: 'Milestone reached: Blueprint', body: 'Common threads now appear across your assessments.', color: '#C9A7FF', shape: '34%', mood: 5, to: '/play/progress' },
+  { id: 'character', day: 'Earlier', time: 'Sep 14', title: 'Meet The Quiet Architect', body: 'Your character has grown with your Big Five result.', color: '#B57BFF', shape: '50%', mood: 'wink', to: '/play/character' },
+  { id: 'result', day: 'Earlier', time: 'Jun 2', title: 'Your 16 Personalities result is in', body: 'You’re an INTJ, The Architect.', color: '#6FD6C8', shape: '50%', mood: 4, to: '/play/test/sixteen/result' },
+]
+
+// Read state is remembered in this browser so the bell's dot stays accurate
+const READ_KEY = 'maslow:proto:read'
+function loadRead(): string[] {
+  try { return JSON.parse(localStorage.getItem(READ_KEY) ?? '[]') } catch { return [] }
+}
+function saveRead(ids: string[]) {
+  try { localStorage.setItem(READ_KEY, JSON.stringify(ids)) } catch { /* storage blocked */ }
+}
+
+export function NotificationsPage() {
+  const navigate = useNavigate()
+  const [read, setRead] = useState(loadRead)
+  const unread = NOTES.filter((n) => !read.includes(n.id)).length
+
+  function markRead(ids: string[]) {
+    const next = Array.from(new Set([...read, ...ids]))
+    setRead(next)
+    saveRead(next)
+  }
+  function open(n: Note) {
+    markRead([n.id])
+    navigate(n.to)
+  }
+
   return (
-    <button className="pf-glass-btn" aria-label="Notifications">
+    <Screen>
+      <TopBar back sub={unread ? `${unread} new` : 'All caught up'} title="Notifications" right={
+        <button className="nt-mark" onClick={() => markRead(NOTES.map((n) => n.id))} disabled={!unread}>Mark all read</button>
+      } />
+      {(['Today', 'Earlier'] as const).map((day) => (
+        <section key={day} className="nt-group">
+          <Heading title={day} />
+          <div className="pf-card nt-list">
+            {NOTES.filter((n) => n.day === day).map((n) => {
+              const isNew = !read.includes(n.id)
+              return (
+                <button key={n.id} className={`nt-row ${isNew ? 'is-new' : ''}`} onClick={() => open(n)}>
+                  <Blob color={n.color} shape={n.shape} size={46} face={32} mood={n.mood} />
+                  <div>
+                    <b>{n.title}</b>
+                    <span>{n.body}</span>
+                  </div>
+                  <small>{n.time}</small>
+                  {isNew && <i className="nt-dot" aria-label="Unread" />}
+                </button>
+              )
+            })}
+          </div>
+        </section>
+      ))}
+      <TabBar />
+    </Screen>
+  )
+}
+
+function Bell() {
+  const navigate = useNavigate()
+  const hasUnread = NOTES.some((n) => !loadRead().includes(n.id))
+  return (
+    <button className="pf-glass-btn nt-bell" onClick={() => navigate('/play/notifications')} aria-label="Notifications">
+      {hasUnread && <i className="nt-badge" />}
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0" /></svg>
     </button>
   )
@@ -39,14 +108,14 @@ function CharacterCard() {
       <span className="pf-stack__back pf-stack__back--1" aria-hidden />
       <div className="pf-hero">
         <div className="pf-hero__stage">
-          <span className="pf-status"><i />{done} of {total} tests</span>
+          <span className="pf-status"><i />{done} of {total} assessments</span>
           <span className="pf-sparkle" aria-hidden>✦</span>
           <div className="pf-hero__art"><ArchitectBlob size={196} /></div>
           <span className="pf-chip pf-chip--a">Deep<br />thinker</span>
           <span className="pf-chip pf-chip--b">Plans<br />ahead</span>
           <p className="pf-note" aria-hidden>
             <svg width="26" height="30" viewBox="0 0 26 30" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M20 28C8 24 4 14 8 3M8 3 3 8M8 3l5 4" /></svg>
-            built from<br />your {done} tests
+            built from<br />your {done} assessments
           </p>
         </div>
         <div className="pf-hero__foot">
@@ -54,7 +123,7 @@ function CharacterCard() {
             <h1>The Quiet Architect</h1>
             <p>Your character</p>
           </div>
-          <button className="pf-dark-btn" onClick={() => navigate('/play/character')}>Meet them</button>
+          <button className="pf-dark-btn" onClick={() => navigate('/play/character')}>View all</button>
         </div>
       </div>
     </section>
@@ -76,7 +145,7 @@ function Widgets() {
         </div>
       </section>
       <section className="pf-widget pf-widget--glow">
-        <p className="pf-widget__label">Tests taken</p>
+        <p className="pf-widget__label">Assessments taken</p>
         <p className="pf-numeral">{done}</p>
       </section>
     </div>
@@ -126,7 +195,7 @@ export function HomePage() {
         <section className="hm-next hm-next--done" style={{ '--blob': '#7FD46F' } as CSSProperties}>
           <div>
             <p className="pf-label">All done</p>
-            <b>Every test complete</b>
+            <b>Every assessment complete</b>
             <span>Your full character is unlocked.</span>
           </div>
           <Blob className="hm-next__blob" color="#7FD46F" size={110} face={78} mood={5} />
@@ -147,7 +216,7 @@ export function HomePage() {
         </div>
       </section>
 
-      <Heading title="Explore tests" aside={<Link to="/play/tests">See all</Link>} />
+      <Heading title="Explore assessments" aside={<Link to="/play/tests">See all</Link>} />
       <div className="pf-threads">
         {TESTS.map((t) => (
           <Link key={t.id} to={results[t.id] ? `/play/test/${t.id}/result` : `/play/test/${t.id}`} className="pf-thread hm-test" style={{ '--blob': t.color } as CSSProperties}>
@@ -166,21 +235,13 @@ export function HomePage() {
 
 /* ---------- Tests ---------- */
 export function TestsPage() {
-  const { results, done, total } = useCounts()
-  const [filter, setFilter] = useState<'all' | 'taken' | 'new'>('all')
-  const list = TESTS.filter((t) => (filter === 'all' ? true : filter === 'taken' ? results[t.id] : !results[t.id]))
+  const { results } = useCounts()
 
   return (
     <Screen>
-      <TopBar sub="Discover more of you" title="Tests" />
-      <div className="ts-filters" role="tablist">
-        {([['all', `All ${total}`], ['taken', `Taken ${done}`], ['new', `New ${total - done}`]] as const).map(([key, label]) => (
-          <button key={key} role="tab" aria-selected={filter === key} className={filter === key ? 'is-active' : ''} onClick={() => setFilter(key)}>{label}</button>
-        ))}
-      </div>
+      <TopBar sub="Discover more of you" title="Assessments" />
       <div className="pf-tests">
-        {list.map((t, i) => <TestCard key={t.id} test={t} result={results[t.id]} delay={i} />)}
-        {list.length === 0 && <p className="ts-empty">Nothing here yet.</p>}
+        {TESTS.map((t, i) => <TestCard key={t.id} test={t} result={results[t.id]} delay={i} />)}
       </div>
       <TabBar />
     </Screen>
@@ -190,13 +251,12 @@ export function TestsPage() {
 /* ---------- Progress ---------- */
 const MILESTONES = [
   { at: 1, title: 'First sketch', note: 'Your character starts to take shape' },
-  { at: 3, title: 'Blueprint', note: 'Common threads appear across tests' },
+  { at: 3, title: 'Blueprint', note: 'Common threads appear across assessments' },
   { at: 6, title: 'Full character', note: 'Every side of you, in one place' },
 ]
 
 export function ProgressPage() {
   const { results, done } = useCounts()
-  const { reset } = useProto()
   const taken = TESTS.filter((t) => results[t.id])
 
   return (
@@ -213,7 +273,7 @@ export function ProgressPage() {
               <span className="pg-dot">{hit ? '✓' : m.at}</span>
               <div>
                 <b>{m.title}</b>
-                <small>{hit ? m.note : `Unlocks at ${m.at} tests`}</small>
+                <small>{hit ? m.note : `Unlocks at ${m.at} assessments`}</small>
               </div>
             </div>
           )
@@ -222,10 +282,10 @@ export function ProgressPage() {
 
       <Heading title="History" aside={`${taken.length} results`} />
       <section className="pf-card pg-history">
-        {taken.length === 0 && <p className="ts-empty">No tests taken yet.</p>}
+        {taken.length === 0 && <p className="ts-empty">No assessments taken yet.</p>}
         {taken.map((t) => (
           <Link key={t.id} to={`/play/test/${t.id}/result`} className="pg-row">
-            <span className="pg-row__art"><CharacterArt kind={results[t.id].character} color={t.color} size={52} id={`hist-${t.id}`} /></span>
+            <span className="pg-row__art"><CharacterArt testId={t.id} result={results[t.id]} color={t.color} size={52} id={`hist-${t.id}`} /></span>
             <div>
               <b>{t.name}</b>
               <small>{results[t.id].code} · {results[t.id].name}</small>
@@ -233,15 +293,6 @@ export function ProgressPage() {
             <span className="pg-row__date">{results[t.id].date}</span>
           </Link>
         ))}
-      </section>
-
-      <Heading title="Prototype" />
-      <section className="pf-card pg-demo">
-        <p>Try the app as a new person, or go back to Alex’s sample profile.</p>
-        <div>
-          <button className="rs-ghost" onClick={() => reset('empty')}>Start fresh</button>
-          <button className="rs-ghost" onClick={() => reset('sample')}>Sample profile</button>
-        </div>
       </section>
 
       <TabBar />
@@ -260,13 +311,13 @@ export function ProfilePage() {
       <TopBar sub="Welcome back" title={`${PERSON.first} ${PERSON.last}`} right={<Bell />} />
       <CharacterCard />
 
-      <Heading title="Common threads" aside="Across your tests" />
+      <Heading title="Common threads" aside="Across your assessments" />
       <Threads />
 
       <Heading title="Your results" aside={`${done} of ${total}`} />
       <div className="pf-tests">
         {taken.map((t, i) => <TestCard key={t.id} test={t} result={results[t.id]} delay={i} />)}
-        {taken.length === 0 && <p className="ts-empty">Take a test to see your first result.</p>}
+        {taken.length === 0 && <p className="ts-empty">Take an assessment to see your first result.</p>}
       </div>
 
       {pending.length > 0 && (
@@ -303,7 +354,7 @@ export function CharacterPage() {
 
       <section className="pf-hero">
         <div className="pf-hero__stage ch-stage">
-          <span className="pf-status"><i />Built from {done} tests</span>
+          <span className="pf-status"><i />Built from {done} assessments</span>
           <div className="pf-hero__art"><ArchitectBlob size={230} /></div>
           <span className="pf-chip pf-chip--a">Deep<br />thinker</span>
           <span className="pf-chip pf-chip--b">Plans<br />ahead</span>
@@ -321,10 +372,10 @@ export function CharacterPage() {
 
       <Heading title="What shapes them" />
       <section className="pf-card pg-history">
-        {taken.length === 0 && <p className="ts-empty">Take a test to start building your character.</p>}
+        {taken.length === 0 && <p className="ts-empty">Take an assessment to start building your character.</p>}
         {taken.map((t) => (
           <Link key={t.id} to={`/play/test/${t.id}/result`} className="pg-row">
-            <span className="pg-row__art"><CharacterArt kind={results[t.id].character} color={t.color} size={52} id={`shape-${t.id}`} /></span>
+            <span className="pg-row__art"><CharacterArt testId={t.id} result={results[t.id]} color={t.color} size={52} id={`shape-${t.id}`} /></span>
             <div>
               <b>{results[t.id].name}</b>
               <small>{t.name} · {results[t.id].code}</small>
