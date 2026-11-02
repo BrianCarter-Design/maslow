@@ -83,7 +83,7 @@ export default function Quiz() {
   }
 
   if (phase === 'intro') return <Intro name={test.name} total={total} minutes={test.minutes} onStart={() => setPhase('quiz')} />
-  if (phase === 'done') return <Celebrate total={total} onResults={() => navigate(`/play/test/${test.id}/result`, { replace: true })} />
+  if (phase === 'done') return <Celebrate name={test.name} total={total} onResults={() => navigate(`/play/test/${test.id}/result`, { replace: true })} />
 
   return (
     <main className="app pf qz" style={{ '--tint': look.color } as CSSProperties}>
@@ -95,7 +95,6 @@ export default function Quiz() {
           {test.statements.map((_, i) => <i key={i} className={i < index ? 'is-done' : i === index ? 'is-now' : ''} />)}
         </div>
         <span className="qz-count"><b>{index + 1}</b>/{total}</span>
-        <img className="app-icon" src="/maslow-icon.png" alt="Maslow" />
       </header>
 
       <section key={index} className="qz-stage">
@@ -155,9 +154,7 @@ function Intro({ name, total, minutes, onStart }: { name: string; total: number;
         <button className="pf-glass-btn" onClick={() => navigate(-1)} aria-label="Back">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
         </button>
-        <span className="qz-top__spacer" />
-        <img className="app-logo" src="/maslow-logo.png" alt="Maslow" />
-        <span className="qz-top__spacer" />
+        <PageTitle kicker="Assessment" title={name} />
         <span className="qz-top__ghost" />
       </header>
 
@@ -165,7 +162,7 @@ function Intro({ name, total, minutes, onStart }: { name: string; total: number;
         <span className="pf-blob qz-intro__blob" style={{ '--blob': look.color, borderRadius: look.shape } as CSSProperties} aria-hidden>
           <Face value={demo} size={92} />
         </span>
-        <p className="pf-label">{name} · {total} statements · ~{minutes} min</p>
+        <p className="pf-label">{total} statements · ~{minutes} min</p>
         <h1>Discover what makes <em>you, you!</em></h1>
         <p className="qz-intro__sub">Rate a few statements about yourself and we’ll reveal your {name} result.</p>
       </section>
@@ -197,11 +194,15 @@ function Intro({ name, total, minutes, onStart }: { name: string; total: number;
   )
 }
 
-function Celebrate({ total, onResults }: { total: number; onResults: () => void }) {
+function Celebrate({ name, total, onResults }: { name: string; total: number; onResults: () => void }) {
   return (
     <main className="app pf qz qz-done" style={{ '--tint': '#7FD46F' } as CSSProperties}>
       <Confetti />
-      <img className="app-logo" src="/maslow-logo.png" alt="Maslow" />
+      <header className="qz-top">
+        <span className="qz-top__ghost" />
+        <PageTitle kicker="Assessment complete" title={name} />
+        <span className="qz-top__ghost" />
+      </header>
       <div className="qz-done__body">
         <div className="qz-done__hero">
           <span className="qz-ring" />
@@ -280,9 +281,7 @@ export function ResultPage() {
         <button className="pf-glass-btn" onClick={() => navigate('/play/profile')} aria-label="Back to profile">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
         </button>
-        <span className="qz-top__spacer" />
-        <img className="app-logo" src="/maslow-logo.png" alt="Maslow" />
-        <span className="qz-top__spacer" />
+        <PageTitle kicker="Your result" title={test.name} />
         <span className="qz-top__ghost" />
       </header>
 
@@ -290,14 +289,13 @@ export function ResultPage() {
         <div className="pf-hero__stage rs-stage" style={{ '--blob': test.color } as CSSProperties}>
           <span className="pf-status"><i />Saved · {result.date}</span>
           <div className="pf-hero__art"><CharacterArt testId={test.id} result={result} color={test.color} size={200} id={`result-${test.id}`} /></div>
-          <span className="pf-chip pf-chip--a">{test.name}</span>
           <p className="pf-note" aria-hidden>
             <svg width="26" height="30" viewBox="0 0 26 30" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M20 28C8 24 4 14 8 3M8 3 3 8M8 3l5 4" /></svg>
             this is you!
           </p>
         </div>
         <div className="rs-head">
-          <p className="pf-label">Your result</p>
+          <p className="pf-label">Your {test.name} result</p>
           <h1>{result.code}</h1>
           <p>{result.name}</p>
         </div>
@@ -318,5 +316,15 @@ export function ResultPage() {
         <button className="rs-ghost" onClick={() => navigate(`/play/test/${test.id}`)}>Retake assessment</button>
       </div>
     </main>
+  )
+}
+
+// Centered page title in the top bar, so people always know where they are
+function PageTitle({ kicker, title }: { kicker: string; title: string }) {
+  return (
+    <div className="qz-title">
+      <small>{kicker}</small>
+      <b>{title}</b>
+    </div>
   )
 }

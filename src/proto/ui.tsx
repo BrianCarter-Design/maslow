@@ -51,7 +51,7 @@ export function TopBar({ title, sub, back, right }: { title: string; sub?: strin
         {sub && <small>{sub}</small>}
         <b>{title}</b>
       </div>
-      {right ?? <img className="app-icon" src="/maslow-icon.png" alt="Maslow" />}
+      {right}
     </header>
   )
 }
