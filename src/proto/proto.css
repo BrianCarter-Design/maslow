@@ -477,3 +477,19 @@ body:has(.app) { background: #f1eff8; overscroll-behavior: none; }
 .qz-title { flex: 1; display: grid; justify-items: center; line-height: 1.2; text-align: center; }
 .qz-title small { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 .qz-title b { font-size: 20px; font-weight: 700; letter-spacing: -0.03em; }
+
+/* Main call-to-action always stays on screen: it sticks to the bottom when the
+   page is taller than the window (short phones), and sits in place otherwise */
+.qz-cta { position: sticky; bottom: max(16px, env(safe-area-inset-bottom)); z-index: 20; }
+/* Result and character pages scroll by design, so their buttons stay at the end */
+.rs-actions .qz-cta { position: static; }
+
+/* Shorter phones: tighten the intro so it usually fits without scrolling */
+@media (max-height: 760px) {
+  .qz-intro__blob { width: 96px; height: 96px; }
+  .qz-intro__blob .mq-face { width: 70px; height: 70px; }
+  .qz-intro__top { gap: 8px; }
+  .qz-intro__top h1 { font-size: 28px; }
+  .qz-how { gap: 8px; padding: 14px; }
+  .qz-steps { gap: 6px; }
+}
