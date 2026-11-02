@@ -1,9 +1,14 @@
+import { useState } from 'react'
+import type { CSSProperties } from 'react'
+
 // Clay-character faces used across the app: big white eyes with dark pupils,
 // soft brows and a mouth. Numeric values 1–5 map to the answer scale
 // (1 = "not me", 5 = "so me"); named moods are for decoration.
 export type Mood = 'sleep' | 'rest' | 'wow' | 'wink'
 
 export default function Face({ value, size, ghost }: { value: number | Mood | null; size: number; ghost?: boolean }) {
+  // Random offset so faces on the same screen don't animate in sync
+  const [offset] = useState(() => Math.random())
   const ink = ghost ? '#B9B4C2' : 'var(--ink, #1c1a22)'
   const line = { stroke: ink, strokeWidth: 6, strokeLinecap: 'round' as const, fill: 'none' }
 
@@ -22,10 +27,10 @@ export default function Face({ value, size, ghost }: { value: number | Mood | nu
   }
 
   const eye = (cx: number, dx = 0, dy = 2) => (
-    <>
+    <g className="lv-eyes">
       <ellipse cx={cx} cy="44" rx="11" ry="12.5" fill="#fff" />
-      <circle cx={cx + dx} cy={44 + dy} r="5.5" fill={ink} />
-    </>
+      <circle className="lv-pupils" cx={cx + dx} cy={44 + dy} r="5.5" fill={ink} />
+    </g>
   )
   const openEyes = (dx = 1, dy = 2) => <>{eye(36, dx, dy)}{eye(64, dx, dy)}</>
   // Brows: friendly arch, worried (inner ends raised) or surprised (lifted high)
@@ -35,10 +40,10 @@ export default function Face({ value, size, ghost }: { value: number | Mood | nu
     wow: ['M26 22 Q36 13 46 19', 'M54 19 Q64 13 74 22'],
   }
   const brows = (kind: keyof typeof BROWS) => (
-    <>
+    <g className="lv-brows">
       <path d={BROWS[kind][0]} {...line} strokeWidth={5} opacity={0.75} />
       <path d={BROWS[kind][1]} {...line} strokeWidth={5} opacity={0.75} />
-    </>
+    </g>
   )
   const shut = (y: number, up = false) => (
     <>
@@ -48,12 +53,12 @@ export default function Face({ value, size, ghost }: { value: number | Mood | nu
   )
 
   return (
-    <svg className="mq-face" width={size} height={size} viewBox="0 0 100 100">
+    <svg className="mq-face lv" style={{ '--lv': offset } as CSSProperties} width={size} height={size} viewBox="0 0 100 100">
       {value === null && <>{openEyes(0, -1)}{brows('happy')}<ellipse cx="50" cy="74" rx="5" ry="6" fill={ink} /></>}
       {value === 1 && <>{shut(44)}{brows('worried')}<path d="M38 76 Q50 64 62 76" {...line} /></>}
-      {value === 2 && <>{openEyes(0, 4)}{brows('worried')}<path d="M38 76 Q50 67 62 76" {...line} /></>}
-      {value === 3 && <>{openEyes(1, 2)}<path d="M40 72 H60" {...line} /></>}
-      {value === 4 && <>{openEyes(1, 1)}{brows('happy')}<path d="M37 68 Q50 78 63 68" {...line} /></>}
+      {value === 2 && <>{openEyes(0, 4)}{brows('worried')}<path className="lv-mouth" d="M38 76 Q50 67 62 76" {...line} /></>}
+      {value === 3 && <>{openEyes(1, 2)}<path className="lv-mouth" d="M40 72 H60" {...line} /></>}
+      {value === 4 && <>{openEyes(1, 1)}{brows('happy')}<path className="lv-mouth" d="M37 68 Q50 78 63 68" {...line} /></>}
       {value === 5 && <>{shut(46, true)}{brows('happy')}<path d="M35 64 H65 Q63 80 50 80 Q37 80 35 64 Z" fill={ink} /></>}
       {value === 'sleep' && <>{shut(46)}<path d="M45 70 Q50 73 55 70" {...line} strokeWidth={5} /><text x="74" y="24" fontSize="16" fontWeight="800" fill={ink}>z</text></>}
       {value === 'rest' && <>{shut(46)}<path d="M44 70 H56" {...line} strokeWidth={5} /></>}
@@ -62,7 +67,7 @@ export default function Face({ value, size, ghost }: { value: number | Mood | nu
         <>
           {eye(36, 1, 1)}
           <path d="M55 46 Q64 38 73 46" {...line} />
-          <path d="M37 66 Q50 77 63 66" {...line} />
+          <path className="lv-mouth" d="M37 66 Q50 77 63 66" {...line} />
         </>
       )}
     </svg>

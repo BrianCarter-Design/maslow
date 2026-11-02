@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 
 // Matte clay characters: a soft round body with diffuse shading (no gloss),
 // big white eyes, rounded brows and a smile, plus a prop that tells their story.
@@ -22,8 +22,10 @@ function ClayBody({ id, color, size, children, behind, eyes = 'both' }: {
   eyes?: 'both' | 'left'
 }) {
   const shade = mix(color, 0x1c1a22, 0.28)
+  // Offset the idle animations per character so they don't all blink in sync
+  const offset = [...id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 997, 7) / 997
   return (
-    <svg width={size} height={size} viewBox="0 0 200 200" aria-hidden>
+    <svg className="lv" style={{ '--lv': offset } as CSSProperties} width={size} height={size} viewBox="0 0 200 200" aria-hidden>
       <defs>
         <radialGradient id={`${id}-body`} cx="0.36" cy="0.3" r="0.85">
           <stop offset="0" stopColor={mix(color, 0xffffff, 0.35)} />
@@ -43,19 +45,21 @@ function ClayBody({ id, color, size, children, behind, eyes = 'both' }: {
       {behind}
       <ellipse cx="100" cy="106" rx="74" ry="72" fill={`url(#${id}-body)`} />
 
-      {/* Eyes */}
-      <ellipse cx="78" cy="100" rx="16" ry="18" fill={`url(#${id}-eye)`} />
-      <circle cx="80" cy="103" r="7.5" fill={INK} />
-      {eyes === 'both' && (
-        <>
-          <ellipse cx="122" cy="100" rx="16" ry="18" fill={`url(#${id}-eye)`} />
-          <circle cx="124" cy="103" r="7.5" fill={INK} />
-        </>
-      )}
+      {/* Eyes: whites blink, pupils glance around */}
+      <g className="lv-eyes">
+        <ellipse cx="78" cy="100" rx="16" ry="18" fill={`url(#${id}-eye)`} />
+        {eyes === 'both' && <ellipse cx="122" cy="100" rx="16" ry="18" fill={`url(#${id}-eye)`} />}
+        <g className="lv-pupils">
+          <circle cx="80" cy="103" r="7.5" fill={INK} />
+          {eyes === 'both' && <circle cx="124" cy="103" r="7.5" fill={INK} />}
+        </g>
+      </g>
       {/* Brows and smile */}
-      <path d="M64 74 Q78 66 92 72" stroke={shade} strokeWidth="5" fill="none" strokeLinecap="round" />
-      <path d="M108 70 Q122 64 136 72" stroke={shade} strokeWidth="5" fill="none" strokeLinecap="round" />
-      <path d="M88 138 Q100 147 112 138" stroke={shade} strokeWidth="5" fill="none" strokeLinecap="round" />
+      <g className="lv-brows">
+        <path d="M64 74 Q78 66 92 72" stroke={shade} strokeWidth="5" fill="none" strokeLinecap="round" />
+        <path d="M108 70 Q122 64 136 72" stroke={shade} strokeWidth="5" fill="none" strokeLinecap="round" />
+      </g>
+      <path className="lv-mouth" d="M88 138 Q100 147 112 138" stroke={shade} strokeWidth="5" fill="none" strokeLinecap="round" />
 
       {children}
     </svg>
@@ -115,9 +119,13 @@ export function InvestigatorBlob({ size = 200, color = '#6FD6C8', id = 'inv' }: 
       <rect x="146" y="112" width="14" height="12" rx="3" fill="#c9a27e" transform="rotate(-38 153 118)" />
       {/* Lens with the magnified eye behind it */}
       <circle cx="124" cy="100" r="30" fill="#e9fbf8" />
-      <ellipse cx="124" cy="100" rx="22" ry="24" fill="#fff" />
-      <circle cx="127" cy="104" r="11" fill={INK} />
-      <circle cx="131" cy="99" r="3.5" fill="#fff" />
+      <g className="lv-eyes">
+        <ellipse cx="124" cy="100" rx="22" ry="24" fill="#fff" />
+        <g className="lv-pupils">
+          <circle cx="127" cy="104" r="11" fill={INK} />
+          <circle cx="131" cy="99" r="3.5" fill="#fff" />
+        </g>
+      </g>
       <circle cx="124" cy="100" r="30" fill="none" stroke="#3a3a46" strokeWidth="6" />
       <path d="M104 86 Q110 76 120 74" stroke="#fff" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.8" />
     </ClayBody>
