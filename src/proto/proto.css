@@ -493,3 +493,5 @@ body:has(.app) { background: #f1eff8; overscroll-behavior: none; }
   .qz-how { gap: 8px; padding: 14px; }
   .qz-steps { gap: 6px; }
 }
+/* Pages without the tab bar still need breathing room under their last button */
+.app.pf:not(:has(.pf-tabs)) { padding-bottom: max(28px, calc(env(safe-area-inset-bottom) + 16px)); }
