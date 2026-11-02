@@ -258,20 +258,23 @@ body:has(.app) { background: #f1eff8; overscroll-behavior: none; }
 }
 @keyframes pf-grow { from { width: 0; } }
 
-/* ---------- Bottom tab bar ---------- */
+/* ---------- Bottom tab bar ----------
+   Fixed to the window (not sticky) so it works the same in every browser and
+   spans the full width; screens with the bar get room at the bottom for it. */
+.app:has(.pf-tabs) { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
 .pf-tabs {
-  position: sticky; bottom: 0; z-index: 10;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
   display: flex; justify-content: space-around;
-  margin: 10px -20px 0; padding: 10px 20px max(14px, env(safe-area-inset-bottom));
-  background: rgba(255, 255, 255, 0.72);
+  padding: 10px max(20px, calc((100% - 400px) / 2)) max(14px, env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-  border-top: 1px solid var(--line);
+  border-top: 1px solid rgba(28, 26, 34, 0.06);
+  box-shadow: 0 -8px 24px -12px rgba(76, 58, 140, 0.18);
   animation: none !important;
 }
 .pf-tabs a { display: grid; justify-items: center; gap: 3px; font-size: 11px; font-weight: 500; color: var(--muted); cursor: pointer; }
 .pf-tabs a.is-active { color: #7a4fd6; font-weight: 600; }
 
-.pf-tabs { margin-top: auto; }
 .pf-heading a { color: #7a4fd6; font-weight: 600; }
 .pf-label.rs-label { margin-bottom: 12px; }
 
