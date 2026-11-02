@@ -1,0 +1,150 @@
+import type { CSSProperties, ReactNode } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
+import Face from '../components/BlobFace'
+import type { Mood } from '../components/BlobFace'
+import { ArchitectBlob, ClayBlob, InvestigatorBlob } from '../components/Characters'
+import type { CharacterKind, TestDef, TestResult } from './tests'
+
+// Small matte clay blob with a face
+export function Blob({ color, shape = '50%', size, face, mood, muted, className = '' }: {
+  color: string
+  shape?: string
+  size: number
+  face: number
+  mood: number | Mood | null
+  muted?: boolean
+  className?: string
+}) {
+  return (
+    <span
+      className={`pf-blob ${muted ? 'is-muted' : ''} ${className}`}
+      style={{ '--blob': color, width: size, height: size, borderRadius: shape } as CSSProperties}
+      aria-hidden
+    >
+      <Face value={mood} size={face} />
+    </span>
+  )
+}
+
+// Full character illustration for a result
+export function CharacterArt({ kind, color, size, id }: { kind?: CharacterKind; color: string; size: number; id: string }) {
+  if (kind === 'investigator') return <InvestigatorBlob size={size} color={color} />
+  if (kind === 'architect') return <ArchitectBlob size={size} color={color} />
+  return <ClayBlob id={id} size={size} color={color} />
+}
+
+export function Screen({ children, className = '', style }: { children: ReactNode; className?: string; style?: CSSProperties }) {
+  return <main className={`app pf ${className}`} style={style}>{children}</main>
+}
+
+export function TopBar({ title, sub, back, right }: { title: string; sub?: string; back?: boolean; right?: ReactNode }) {
+  const navigate = useNavigate()
+  return (
+    <header className="pf-top">
+      {back ? (
+        <button className="pf-glass-btn" onClick={() => navigate(-1)} aria-label="Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+        </button>
+      ) : (
+        <Blob color="#C9A7FF" size={44} face={32} mood="wink" />
+      )}
+      <div className="pf-top__who">
+        {sub && <small>{sub}</small>}
+        <b>{title}</b>
+      </div>
+      {right ?? <img className="app-icon" src="/maslow-icon.png" alt="Maslow" />}
+    </header>
+  )
+}
+
+const TABS = [
+  { to: '/play', label: 'Home', d: 'M4 11 12 4l8 7v9h-5v-6H9v6H4z', end: true },
+  { to: '/play/tests', label: 'Tests', d: 'M5 4h14v16H5zM9 9h6M9 13h6M9 17h3' },
+  { to: '/play/progress', label: 'Progress', d: 'M5 20V10M12 20V4M19 20v-7' },
+  { to: '/play/profile', label: 'Profile', d: 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0' },
+]
+
+export function TabBar() {
+  return (
+    <nav className="pf-tabs" aria-label="Main">
+      {TABS.map((t) => (
+        <NavLink key={t.to} to={t.to} end={t.end} className={({ isActive }) => (isActive ? 'is-active' : '')}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={t.d} /></svg>
+          {t.label}
+        </NavLink>
+      ))}
+    </nav>
+  )
+}
+
+export function Heading({ title, aside }: { title: string; aside?: ReactNode }) {
+  return (
+    <div className="pf-heading">
+      <h2>{title}</h2>
+      {aside && <span>{aside}</span>}
+    </div>
+  )
+}
+
+export function Arrow({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+  )
+}
+
+// One card for every test: taken shows the result, not taken invites you in
+export function TestCard({ test, result, delay = 0 }: { test: TestDef; result?: TestResult; delay?: number }) {
+  const navigate = useNavigate()
+  const done = Boolean(result)
+  const open = () => navigate(done ? `/play/test/${test.id}/result` : `/play/test/${test.id}`)
+  return (
+    <article
+      className={`pf-card ${done ? '' : 'is-pending'}`}
+      style={{ '--blob': test.color, animationDelay: `${0.1 + delay * 0.05}s` } as CSSProperties}
+    >
+      <header className="pf-card__head">
+        <Blob color={test.color} shape={test.shape} size={44} face={30} mood={done ? 4 : 'rest'} muted={!done} />
+        <div className="pf-card__title">
+          <b>{test.name}</b>
+          <small>{done ? `Taken ${result!.date}` : `Not taken · ${test.minutes} min`}</small>
+        </div>
+        {done ? (
+          <button className="pf-glass-btn" onClick={open} aria-label={`Open ${test.name} results`}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
+          </button>
+        ) : (
+          <button className="pf-take" onClick={open}>
+            Take test
+            <span><Arrow size={12} /></span>
+          </button>
+        )}
+      </header>
+
+      {done ? (
+        <>
+          <div className="pf-card__hero">
+            <p className="pf-card__result">{result!.code}<span>{result!.name}</span></p>
+            <span className="pf-card__art"><CharacterArt kind={result!.character} color={test.color} size={92} id={`card-${test.id}`} /></span>
+          </div>
+          <Scores scores={result!.scores} />
+        </>
+      ) : (
+        <p className="pf-card__teaser">{test.teaser}</p>
+      )}
+    </article>
+  )
+}
+
+export function Scores({ scores }: { scores: TestResult['scores'] }) {
+  return (
+    <div className="pf-scores">
+      {scores.map((s) => (
+        <div key={s.label}>
+          <small>{s.label}</small>
+          <span className="pf-meter"><i style={{ width: `${s.pct}%`, '--c': s.color } as CSSProperties} /></span>
+          <b>{s.pct}</b>
+        </div>
+      ))}
+    </div>
+  )
+}
