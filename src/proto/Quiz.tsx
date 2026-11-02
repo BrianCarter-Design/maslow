@@ -163,6 +163,7 @@ function Intro({ name, total, minutes, onStart }: { name: string; total: number;
         <span className="qz-top__ghost" />
       </header>
 
+      <div className="qz-scroll">
       <section className="qz-intro__top">
         <span className="pf-blob qz-intro__blob" style={{ '--blob': look.color, borderRadius: look.shape } as CSSProperties} aria-hidden>
           <Face value={demo} size={92} />
@@ -190,9 +191,9 @@ function Intro({ name, total, minutes, onStart }: { name: string; total: number;
         <ol className="qz-steps">
           <li><b>1</b>Read each statement</li>
           <li><b>2</b>Tap the face that fits, or slide along the bar</li>
-          <li><b>3</b>Go with your gut, there are no wrong answers</li>
         </ol>
       </section>
+      </div>
 
       <button className="pf-dark-btn qz-cta" onClick={onStart}>Start assessment <Arrow /></button>
     </main>

@@ -511,3 +511,19 @@ body:has(.app) { background: #f1eff8; overscroll-behavior: none; }
 @media (prefers-reduced-motion: reduce) {
   .lv .lv-eyes, .lv .lv-pupils, .lv .lv-brows, .lv .lv-mouth { animation: none; }
 }
+
+/* Intro and celebration fill exactly one screen: the button sits at the bottom,
+   and only the middle scrolls if it doesn't fit. (Sticky alone wasn't reliable
+   in iPhone Safari.) */
+.qz.qz-intro, .qz.qz-done { height: 100dvh; min-height: 0; overflow: hidden; }
+.qz-scroll, .qz-done__body {
+  flex: 1; min-height: 0;
+  display: flex; flex-direction: column; gap: 14px;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  margin: -14px -20px 0; padding: 14px 20px 6px; /* room for card shadows */
+  scrollbar-width: none;
+}
+.qz-scroll::-webkit-scrollbar { display: none; }
+.qz.qz-intro .qz-cta, .qz.qz-done .qz-cta { position: static; flex: none; margin-top: 0; }
+.qz-intro__top { flex: none; }
+.qz-scroll { -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent); }
