@@ -44,8 +44,8 @@ function topTrait(
 }
 
 const TYPE_COLORS: Record<number, string> = {
-  1: '#00A0FC', 2: '#FC75C6', 3: '#FCCD03', 4: '#7659FF', 5: '#63D6FF',
-  6: '#05D16F', 7: '#FF8500', 8: '#F23F39', 9: '#63D6FF',
+  1: '#3399FF', 2: '#FF3399', 3: '#E6C200', 4: '#9933FF', 5: '#00C5E5',
+  6: '#33FF99', 7: '#FF6666', 8: '#CC00DD', 9: '#00C5E5',
 }
 
 const ENNEAGRAM_IDS = [13, 1, 22, 7, 25]
@@ -57,15 +57,15 @@ const SIXTEEN_NAMES: Record<string, string> = {
   ISTP: 'Virtuoso', ISFP: 'Adventurer', ESTP: 'Entrepreneur', ESFP: 'Entertainer',
 }
 const AXES = [
-  { key: 'IE', yes: 'I', no: 'E', yesLabel: 'Introverted', noLabel: 'Extraverted', color: '#63D6FF' },
-  { key: 'NS', yes: 'N', no: 'S', yesLabel: 'Intuitive', noLabel: 'Observant', color: '#FCCD03' },
-  { key: 'TF', yes: 'T', no: 'F', yesLabel: 'Thinking', noLabel: 'Feeling', color: '#05D16F' },
-  { key: 'JP', yes: 'J', no: 'P', yesLabel: 'Judging', noLabel: 'Prospecting', color: '#FC75C6' },
+  { key: 'IE', yes: 'I', no: 'E', yesLabel: 'Introverted', noLabel: 'Extraverted', color: '#00C5E5' },
+  { key: 'NS', yes: 'N', no: 'S', yesLabel: 'Intuitive', noLabel: 'Observant', color: '#E6C200' },
+  { key: 'TF', yes: 'T', no: 'F', yesLabel: 'Thinking', noLabel: 'Feeling', color: '#33FF99' },
+  { key: 'JP', yes: 'J', no: 'P', yesLabel: 'Judging', noLabel: 'Prospecting', color: '#FF3399' },
 ]
 
 export const TESTS: TestDef[] = [
   {
-    id: 'enneagram', name: 'Enneagram', color: '#63D6FF', shape: '50%', minutes: 2,
+    id: 'enneagram', name: 'Enneagram', color: '#00C5E5', shape: '50%', minutes: 2,
     teaser: 'The core motivation behind what you do.',
     statements: ENNEAGRAM_IDS.map((id) => {
       const q = ENNEAGRAM_QUESTIONS.find((x) => x.id === id)!
@@ -83,7 +83,7 @@ export const TESTS: TestDef[] = [
     },
   },
   {
-    id: 'sixteen', name: '16 Personalities', color: '#7659FF', shape: '34%', minutes: 2,
+    id: 'sixteen', name: '16 Personalities', color: '#9933FF', shape: '34%', minutes: 2,
     teaser: 'How you think, decide and recharge.',
     statements: [
       { text: 'After a busy week, I need time alone to recharge.', key: 'IE' },
@@ -109,7 +109,7 @@ export const TESTS: TestDef[] = [
     },
   },
   {
-    id: 'bigfive', name: 'Big Five', color: '#FCCD03', shape: '42% 58% 62% 38% / 40% 44% 56% 60%', minutes: 2,
+    id: 'bigfive', name: 'Big Five', color: '#E6C200', shape: '42% 58% 62% 38% / 40% 44% 56% 60%', minutes: 2,
     teaser: 'The five traits psychologists trust most.',
     statements: [
       { text: 'I love exploring new ideas, art and experiences.', key: 'O' },
@@ -120,16 +120,16 @@ export const TESTS: TestDef[] = [
     ],
     score(answers) {
       return topTrait(this.statements, answers, {
-        O: { label: 'Openness', color: '#7659FF', name: 'The Explorer', blurb: 'Curious and imaginative, you are energised by new ideas and experiences.' },
-        C: { label: 'Conscientious', color: '#00A0FC', name: 'The Organiser', blurb: 'Reliable and thorough, you turn plans into finished work.' },
-        E: { label: 'Extraversion', color: '#FF8500', name: 'The Connector', blurb: 'Outgoing and warm, you draw energy from other people.' },
-        A: { label: 'Agreeable', color: '#05D16F', name: 'The Peacekeeper', blurb: 'Kind and cooperative, you bring people together.' },
-        N: { label: 'Sensitivity', color: '#F23F39', name: 'The Feeler', blurb: 'You notice risks early and feel things deeply.' },
+        O: { label: 'Openness', color: '#9933FF', name: 'The Explorer', blurb: 'Curious and imaginative, you are energised by new ideas and experiences.' },
+        C: { label: 'Conscientious', color: '#3399FF', name: 'The Organiser', blurb: 'Reliable and thorough, you turn plans into finished work.' },
+        E: { label: 'Extraversion', color: '#FF6666', name: 'The Connector', blurb: 'Outgoing and warm, you draw energy from other people.' },
+        A: { label: 'Agreeable', color: '#33FF99', name: 'The Peacekeeper', blurb: 'Kind and cooperative, you bring people together.' },
+        N: { label: 'Sensitivity', color: '#CC00DD', name: 'The Feeler', blurb: 'You notice risks early and feel things deeply.' },
       })
     },
   },
   {
-    id: 'love', name: 'Love Languages', color: '#FC75C6', shape: '50% 50% 42% 42% / 62% 62% 38% 38%', minutes: 2,
+    id: 'love', name: 'Love Languages', color: '#FF3399', shape: '50% 50% 42% 42% / 62% 62% 38% 38%', minutes: 2,
     teaser: 'How you give and receive care.',
     statements: [
       { text: 'Hearing “I appreciate you” makes my day.', key: 'words' },
@@ -140,16 +140,16 @@ export const TESTS: TestDef[] = [
     ],
     score(answers) {
       return topTrait(this.statements, answers, {
-        words: { label: 'Words', code: 'Words of Affirmation', color: '#FC75C6', name: 'Your love language', blurb: 'Kind, specific words are how you feel most cared for.' },
-        time: { label: 'Quality Time', code: 'Quality Time', color: '#7659FF', name: 'Your love language', blurb: 'Full, undivided attention is your love language.' },
-        gifts: { label: 'Gifts', code: 'Receiving Gifts', color: '#FCCD03', name: 'Your love language', blurb: 'Thoughtful tokens show you that someone was thinking of you.' },
-        acts: { label: 'Acts of Service', code: 'Acts of Service', color: '#05D16F', name: 'Your love language', blurb: 'Actions speak loudest: help is how you feel loved.' },
-        touch: { label: 'Touch', code: 'Physical Touch', color: '#FF8500', name: 'Your love language', blurb: 'Closeness and touch make you feel safe and connected.' },
+        words: { label: 'Words', code: 'Words of Affirmation', color: '#FF3399', name: 'Your love language', blurb: 'Kind, specific words are how you feel most cared for.' },
+        time: { label: 'Quality Time', code: 'Quality Time', color: '#9933FF', name: 'Your love language', blurb: 'Full, undivided attention is your love language.' },
+        gifts: { label: 'Gifts', code: 'Receiving Gifts', color: '#E6C200', name: 'Your love language', blurb: 'Thoughtful tokens show you that someone was thinking of you.' },
+        acts: { label: 'Acts of Service', code: 'Acts of Service', color: '#33FF99', name: 'Your love language', blurb: 'Actions speak loudest: help is how you feel loved.' },
+        touch: { label: 'Touch', code: 'Physical Touch', color: '#FF6666', name: 'Your love language', blurb: 'Closeness and touch make you feel safe and connected.' },
       })
     },
   },
   {
-    id: 'disc', name: 'DISC', color: '#FF8500', shape: '30%', minutes: 2,
+    id: 'disc', name: 'DISC', color: '#FF6666', shape: '30%', minutes: 2,
     teaser: 'How you work, lead and communicate.',
     statements: [
       { text: 'I like to take charge and move fast.', key: 'D' },
@@ -160,10 +160,10 @@ export const TESTS: TestDef[] = [
     ],
     score(answers) {
       const traits: Record<string, { label: string; color: string; name: string; blurb: string }> = {
-        D: { label: 'Dominance', color: '#F23F39', name: 'The Driver', blurb: 'Direct and decisive, you push for results.' },
-        I: { label: 'Influence', color: '#FCCD03', name: 'The Inspirer', blurb: 'Enthusiastic and persuasive, you rally people.' },
-        S: { label: 'Steadiness', color: '#05D16F', name: 'The Supporter', blurb: 'Patient and dependable, you keep teams steady.' },
-        C: { label: 'Conscientiousness', color: '#00A0FC', name: 'The Analyst', blurb: 'Precise and careful, you value getting it right.' },
+        D: { label: 'Dominance', color: '#CC00DD', name: 'The Driver', blurb: 'Direct and decisive, you push for results.' },
+        I: { label: 'Influence', color: '#E6C200', name: 'The Inspirer', blurb: 'Enthusiastic and persuasive, you rally people.' },
+        S: { label: 'Steadiness', color: '#33FF99', name: 'The Supporter', blurb: 'Patient and dependable, you keep teams steady.' },
+        C: { label: 'Conscientiousness', color: '#3399FF', name: 'The Analyst', blurb: 'Precise and careful, you value getting it right.' },
       }
       const totals: Record<string, number[]> = {}
       this.statements.forEach((s, i) => (totals[s.key] ??= []).push(pct(answers[i])))
@@ -173,7 +173,7 @@ export const TESTS: TestDef[] = [
     },
   },
   {
-    id: 'strengths', name: 'Strengths', color: '#05D16F', shape: '46% 54% 50% 50% / 50% 46% 54% 50%', minutes: 2,
+    id: 'strengths', name: 'Strengths', color: '#33FF99', shape: '46% 54% 50% 50% / 50% 46% 54% 50%', minutes: 2,
     teaser: 'The talents you lean on most.',
     statements: [
       { text: 'I see patterns other people miss.', key: 'strategic' },
@@ -184,11 +184,11 @@ export const TESTS: TestDef[] = [
     ],
     score(answers) {
       return topTrait(this.statements, answers, {
-        strategic: { label: 'Strategic', code: 'Strategic', color: '#7659FF', name: 'The Strategist', blurb: 'You spot the best route through complexity.' },
-        achiever: { label: 'Achiever', code: 'Achiever', color: '#FF8500', name: 'The Achiever', blurb: 'You have stamina and love getting things done.' },
-        learner: { label: 'Learner', code: 'Learner', color: '#63D6FF', name: 'The Learner', blurb: 'The process of learning energises you.' },
-        empathy: { label: 'Empathy', code: 'Empathy', color: '#FC75C6', name: 'The Empath', blurb: 'You feel what others feel and respond with care.' },
-        arranger: { label: 'Arranger', code: 'Arranger', color: '#05D16F', name: 'The Arranger', blurb: 'You organise people and resources with ease.' },
+        strategic: { label: 'Strategic', code: 'Strategic', color: '#9933FF', name: 'The Strategist', blurb: 'You spot the best route through complexity.' },
+        achiever: { label: 'Achiever', code: 'Achiever', color: '#FF6666', name: 'The Achiever', blurb: 'You have stamina and love getting things done.' },
+        learner: { label: 'Learner', code: 'Learner', color: '#00C5E5', name: 'The Learner', blurb: 'The process of learning energises you.' },
+        empathy: { label: 'Empathy', code: 'Empathy', color: '#FF3399', name: 'The Empath', blurb: 'You feel what others feel and respond with care.' },
+        arranger: { label: 'Arranger', code: 'Arranger', color: '#33FF99', name: 'The Arranger', blurb: 'You organise people and resources with ease.' },
       })
     },
   },
@@ -201,17 +201,17 @@ export const SEED_RESULTS: Record<string, TestResult> = {
   enneagram: {
     date: 'Mar 2026', code: 'Type 5', name: 'The Investigator',
     blurb: getType(5).description,
-    scores: [{ label: 'Investigator', pct: 84, color: '#63D6FF' }, { label: 'Individualist', pct: 66, color: '#7659FF' }, { label: 'Reformer', pct: 52, color: '#00A0FC' }],
+    scores: [{ label: 'Investigator', pct: 84, color: '#00C5E5' }, { label: 'Individualist', pct: 66, color: '#9933FF' }, { label: 'Reformer', pct: 52, color: '#3399FF' }],
   },
   sixteen: {
     date: 'Jun 2026', code: 'INTJ', name: 'The Architect',
     blurb: 'Imaginative and strategic thinkers with a plan for everything. INTJs build ideas carefully and quietly.',
-    scores: [{ label: 'Introverted', pct: 72, color: '#63D6FF' }, { label: 'Intuitive', pct: 64, color: '#FCCD03' }, { label: 'Thinking', pct: 58, color: '#05D16F' }, { label: 'Judging', pct: 61, color: '#FC75C6' }],
+    scores: [{ label: 'Introverted', pct: 72, color: '#00C5E5' }, { label: 'Intuitive', pct: 64, color: '#E6C200' }, { label: 'Thinking', pct: 58, color: '#33FF99' }, { label: 'Judging', pct: 61, color: '#FF3399' }],
   },
   bigfive: {
     date: 'Sep 2026', code: 'High Openness', name: 'The Explorer',
     blurb: 'Curious and imaginative, you are energised by new ideas and experiences.',
-    scores: [{ label: 'Openness', pct: 82, color: '#7659FF' }, { label: 'Conscientious', pct: 68, color: '#00A0FC' }, { label: 'Agreeable', pct: 55, color: '#05D16F' }, { label: 'Sensitivity', pct: 40, color: '#F23F39' }, { label: 'Extraversion', pct: 31, color: '#FF8500' }],
+    scores: [{ label: 'Openness', pct: 82, color: '#9933FF' }, { label: 'Conscientious', pct: 68, color: '#3399FF' }, { label: 'Agreeable', pct: 55, color: '#33FF99' }, { label: 'Sensitivity', pct: 40, color: '#CC00DD' }, { label: 'Extraversion', pct: 31, color: '#FF6666' }],
   },
 }
 

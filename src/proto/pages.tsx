@@ -11,9 +11,9 @@ import { HomeSocial } from './friends'
 const PERSON = { first: 'Christopher', last: 'Franklin' }
 
 const THREADS: { title: string; source: string; color: string; shape: string; mood: number | Mood }[] = [
-  { title: 'Recharges alone', source: 'Type 5 · Introverted 72%', color: '#63D6FF', shape: '50%', mood: 'rest' },
-  { title: 'Fuelled by ideas', source: 'Openness 82%', color: '#7659FF', shape: '34%', mood: 'wow' },
-  { title: 'Plans, then commits', source: 'Judging 61%', color: '#FCCD03', shape: '42% 58% 62% 38% / 40% 44% 56% 60%', mood: 4 },
+  { title: 'Recharges alone', source: 'Type 5 · Introverted 72%', color: '#00C5E5', shape: '50%', mood: 'rest' },
+  { title: 'Fuelled by ideas', source: 'Openness 82%', color: '#9933FF', shape: '34%', mood: 'wow' },
+  { title: 'Plans, then commits', source: 'Judging 61%', color: '#E6C200', shape: '42% 58% 62% 38% / 40% 44% 56% 60%', mood: 4 },
 ]
 
 function useCounts() {
@@ -26,14 +26,14 @@ function useCounts() {
 interface Note { id: string; day: 'Today' | 'Earlier'; time: string; title: string; body: string; color: string; shape: string; mood: number | Mood; to: string }
 
 const NOTES: Note[] = [
-  { id: 'about-maya', day: 'Today', time: '10:24', title: 'Maya took the Enneagram for you 👀', body: 'She sees you as The Achiever. Do you agree?', color: '#FC75C6', shape: '50% 50% 42% 42% / 62% 62% 38% 38%', mood: 5, to: '/play/test/enneagram/result' },
-  { id: 'req-sam', day: 'Today', time: '9:40', title: 'Sam wants your take', body: 'Sam asked you to take the Enneagram about him. 2 minutes.', color: '#05D16F', shape: '46% 54% 50% 50% / 50% 46% 54% 50%', mood: 'wow', to: '/play/friends' },
-  { id: 'twin-priya', day: 'Earlier', time: 'Yesterday', title: 'You have a personality twin!', body: 'Priya is an INTJ too. See what else you share.', color: '#FCCD03', shape: '42% 58% 62% 38% / 40% 44% 56% 60%', mood: 'wink', to: '/play/friend/priya' },
-  { id: 'insight', day: 'Today', time: '9:12', title: 'New insight unlocked', body: 'You plan first, then commit. See what links your results.', color: '#FCCD03', shape: '42% 58% 62% 38% / 40% 44% 56% 60%', mood: 'wow', to: '/play/profile' },
-  { id: 'next', day: 'Today', time: '8:30', title: 'Ready for your next assessment?', body: 'Love Languages takes about 2 minutes.', color: '#FC75C6', shape: '50% 50% 42% 42% / 62% 62% 38% 38%', mood: 4, to: '/play/test/love' },
-  { id: 'milestone', day: 'Earlier', time: 'Sep 14', title: 'Milestone reached: Blueprint', body: 'Common threads now appear across your assessments.', color: '#7659FF', shape: '34%', mood: 5, to: '/play/progress' },
-  { id: 'character', day: 'Earlier', time: 'Sep 14', title: 'Meet The Quiet Architect', body: 'Your character has grown with your Big Five result.', color: '#7659FF', shape: '50%', mood: 'wink', to: '/play/character' },
-  { id: 'result', day: 'Earlier', time: 'Jun 2', title: 'Your 16 Personalities result is in', body: 'You’re an INTJ, The Architect.', color: '#63D6FF', shape: '50%', mood: 4, to: '/play/test/sixteen/result' },
+  { id: 'about-maya', day: 'Today', time: '10:24', title: 'Maya took the Enneagram for you 👀', body: 'She sees you as The Achiever. Do you agree?', color: '#FF3399', shape: '50% 50% 42% 42% / 62% 62% 38% 38%', mood: 5, to: '/play/test/enneagram/result' },
+  { id: 'req-sam', day: 'Today', time: '9:40', title: 'Sam wants your take', body: 'Sam asked you to take the Enneagram about him. 2 minutes.', color: '#33FF99', shape: '46% 54% 50% 50% / 50% 46% 54% 50%', mood: 'wow', to: '/play/friends' },
+  { id: 'twin-priya', day: 'Earlier', time: 'Yesterday', title: 'You have a personality twin!', body: 'Priya is an INTJ too. See what else you share.', color: '#E6C200', shape: '42% 58% 62% 38% / 40% 44% 56% 60%', mood: 'wink', to: '/play/friend/priya' },
+  { id: 'insight', day: 'Today', time: '9:12', title: 'New insight unlocked', body: 'You plan first, then commit. See what links your results.', color: '#E6C200', shape: '42% 58% 62% 38% / 40% 44% 56% 60%', mood: 'wow', to: '/play/profile' },
+  { id: 'next', day: 'Today', time: '8:30', title: 'Ready for your next assessment?', body: 'Love Languages takes about 2 minutes.', color: '#FF3399', shape: '50% 50% 42% 42% / 62% 62% 38% 38%', mood: 4, to: '/play/test/love' },
+  { id: 'milestone', day: 'Earlier', time: 'Sep 14', title: 'Milestone reached: Blueprint', body: 'Common threads now appear across your assessments.', color: '#9933FF', shape: '34%', mood: 5, to: '/play/progress' },
+  { id: 'character', day: 'Earlier', time: 'Sep 14', title: 'Meet The Quiet Architect', body: 'Your character has grown with your Big Five result.', color: '#9933FF', shape: '50%', mood: 'wink', to: '/play/character' },
+  { id: 'result', day: 'Earlier', time: 'Jun 2', title: 'Your 16 Personalities result is in', body: 'You’re an INTJ, The Architect.', color: '#00C5E5', shape: '50%', mood: 4, to: '/play/test/sixteen/result' },
 ]
 
 // Read state is remembered in this browser so the bell's dot stays accurate
@@ -196,13 +196,13 @@ export function HomePage() {
           <Blob className="hm-next__blob" color={next.color} shape={next.shape} size={110} face={78} mood={4} />
         </button>
       ) : (
-        <section className="hm-next hm-next--done" style={{ '--blob': '#05D16F' } as CSSProperties}>
+        <section className="hm-next hm-next--done" style={{ '--blob': '#33FF99' } as CSSProperties}>
           <div>
             <p className="pf-label">All done</p>
             <b>Every assessment complete</b>
             <span>Your full character is unlocked.</span>
           </div>
-          <Blob className="hm-next__blob" color="#05D16F" size={110} face={78} mood={5} />
+          <Blob className="hm-next__blob" color="#33FF99" size={110} face={78} mood={5} />
         </section>
       )}
 
@@ -393,13 +393,13 @@ export function CharacterPage() {
 
       <Heading title="Strengths & watch-outs" />
       <div className="ch-split">
-        <section className="ch-tile" style={{ '--blob': '#05D16F' } as CSSProperties}>
-          <Blob color="#05D16F" size={44} face={32} mood={5} />
+        <section className="ch-tile" style={{ '--blob': '#33FF99' } as CSSProperties}>
+          <Blob color="#33FF99" size={44} face={32} mood={5} />
           <b>At your best</b>
           <p>Calm, independent problem-solving and long-range plans.</p>
         </section>
-        <section className="ch-tile" style={{ '--blob': '#FF8500' } as CSSProperties}>
-          <Blob color="#FF8500" shape="34%" size={44} face={32} mood={2} />
+        <section className="ch-tile" style={{ '--blob': '#FF6666' } as CSSProperties}>
+          <Blob color="#FF6666" shape="34%" size={44} face={32} mood={2} />
           <b>Watch out for</b>
           <p>Overthinking and keeping people at arm’s length.</p>
         </section>
