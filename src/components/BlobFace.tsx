@@ -9,7 +9,7 @@ export type Mood = 'sleep' | 'rest' | 'wow' | 'wink'
 export default function Face({ value, size, ghost }: { value: number | Mood | null; size: number; ghost?: boolean }) {
   // Random offset so faces on the same screen don't animate in sync
   const [offset] = useState(() => Math.random())
-  const ink = ghost ? '#B9B4C2' : 'var(--ink, #1c1a22)'
+  const ink = ghost ? '#B9B4C2' : 'var(--ink, #1d1d1f)'
   const line = { stroke: ink, strokeWidth: 6, strokeLinecap: 'round' as const, fill: 'none' }
 
   // Ghost faces (slider hints) stay as simple line drawings

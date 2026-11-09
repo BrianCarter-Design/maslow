@@ -11,13 +11,13 @@ import { Arrow, Blob, CharacterArt, Scores } from './ui'
 
 // The answer scale: colour, label and blob shape for each step
 const SCALE = [
-  { value: 1, label: 'Not me at all', color: '#B57BFF', shape: '50% 50% 42% 42% / 62% 62% 38% 38%' },
-  { value: 2, label: 'Not really', color: '#FF8A3D', shape: '34%' },
-  { value: 3, label: 'Somewhere between', color: '#C9A27E', shape: '50%' },
-  { value: 4, label: 'Mostly me', color: '#FFC93C', shape: '42% 58% 62% 38% / 40% 44% 56% 60%' },
-  { value: 5, label: 'Totally me!', color: '#7FD46F', shape: '50%' },
+  { value: 1, label: 'Not me at all', color: '#7659FF', shape: '50% 50% 42% 42% / 62% 62% 38% 38%' },
+  { value: 2, label: 'Not really', color: '#FF8500', shape: '34%' },
+  { value: 3, label: 'Somewhere between', color: '#BFB6A5', shape: '50%' },
+  { value: 4, label: 'Mostly me', color: '#FCCD03', shape: '42% 58% 62% 38% / 40% 44% 56% 60%' },
+  { value: 5, label: 'Totally me!', color: '#05D16F', shape: '50%' },
 ]
-const IDLE = { color: '#CDBEF7', shape: '46%' }
+const IDLE = { color: '#DDD3C0', shape: '46%' }
 const COMMIT_DELAY = 420
 
 const monthYear = () => new Date().toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })
@@ -230,7 +230,7 @@ function Intro({ name, total, minutes, friend, onStart }: { name: string; total:
 
 function Celebrate({ name, total, friend, onResults }: { name: string; total: number; friend?: Friend; onResults: () => void }) {
   return (
-    <main className="app pf qz qz-done" style={{ '--tint': '#7FD46F' } as CSSProperties}>
+    <main className="app pf qz qz-done" style={{ '--tint': '#05D16F' } as CSSProperties}>
       <Confetti />
       <header className="qz-top">
         <span className="qz-top__ghost" />
@@ -241,7 +241,7 @@ function Celebrate({ name, total, friend, onResults }: { name: string; total: nu
         <div className="qz-done__hero">
           <span className="qz-ring" />
           <span className="qz-ring qz-ring--2" />
-          <Blob className="qz-party" color="#7FD46F" size={170} face={120} mood={5} />
+          <Blob className="qz-party" color="#05D16F" size={170} face={120} mood={5} />
         </div>
         {friend ? (
           <>
@@ -269,7 +269,7 @@ function Confetti() {
     const dpr = Math.min(2, devicePixelRatio || 1)
     const w = (canvas.width = canvas.offsetWidth * dpr)
     const h = (canvas.height = canvas.offsetHeight * dpr)
-    const colors = SCALE.map((s) => s.color).concat('#FF9EC7', '#9FD8FF', '#6FD6C8')
+    const colors = SCALE.map((s) => s.color).concat('#FC75C6', '#63D6FF', '#63D6FF')
     const make = (fromLeft: boolean) => ({
       x: fromLeft ? 0 : w, y: h * 0.7,
       vx: (fromLeft ? 1 : -1) * (Math.random() * 14 + 6) * dpr,
